@@ -1,83 +1,106 @@
 import { Canvas } from '@react-three/fiber'
 import { Player } from './components/Player'
-import { Ground, Wall, WallWithDoor } from './components/Room'
+import { SalleAccueil } from './components/halls/SalleAccueil'
+import { CouloirAccueil } from './components/corridors/CouloirAccueil'
+import { SalleProjet } from './components/halls/SalleProjet'
+import { CouloirContact } from './components/corridors/CouloirContact'
+import { SalleContact } from './components/halls/SalleContact'
+import { CouloirProfil } from './components/corridors/CouloirProfil'
+import { SalleProfil } from './components/halls/SalleProfil'
+import { CouloirExperience } from './components/corridors/CouloirExperience'
+import { SalleExperience } from './components/halls/SalleExperience'
+import { Painting } from './components/Painting'
+import { useEffect, useState } from 'react'
+import { projects } from './data/projects'
 
 export default function App() {
-  return (
+  const [nearPainting, setNearPainting] = useState(null)
+  const [openProject, setOpenProject] = useState(null)
+  useEffect(() => {
+    const onKeyDown = (e) => {
+      if (e.code === 'KeyE' && nearPainting) {
+        setOpenProject(nearPainting)
+      }
+      if (e.code === 'KeyE' && openProject) {
+        setOpenProject(null)
+      }
+    }
+    window.addEventListener('keydown', onKeyDown)
+    return () => window.removeEventListener('keydown', onKeyDown)
+  }, [nearPainting, openProject])
+  return(
+    <>
     <Canvas style={{ width: '100%', height: '100vh' }} camera={{ position: [0, 1, 2], fov: 75 }}>
       <ambientLight intensity={2} />
-      <Player />
+      <Player openProject={openProject}/>
       {/* Hall d'accueil */}
-      <Ground position={[0, 0, 0]} args={[10,10]}/>
-      <Ground position={[0, 10, 0]} args={[10,10]}/>
-      <Wall position={[0, 5, 5]} rotation={[0, Math.PI, 0]} color={"blue"} args={[10,10]}/>
-      <Wall position={[-5, 5, 0]} rotation={[0, Math.PI / 2, 0]} color={"green"} args={[10,10]}/>
-      <Wall position={[5, 5, 0]} rotation={[0, -Math.PI / 2, 0]} color={"yellow"} args={[10,10]}/>
-      <WallWithDoor position={[5,5,-5]} rotation={[0, 0, 0]} color={"red"}/>
-
+      <SalleAccueil />
       {/* Couloir Hall d'accueil */}
-      <Ground position={[0, 0, -10]} args={[4,10]}/>
-      <Ground position={[0, 4, -10]} args={[4,10]}/>
-      <Wall position={[2, 2, -10]} rotation={[0, -Math.PI / 2, 0]} color={"yellow"} args={[10,4]}/>
-      <Wall position={[-2, 2, -10]} rotation={[0, Math.PI / 2, 0]} color={"green"} args={[10,4]}/>
-      <WallWithDoor position={[5,5,-15]} rotation={[0, 0, 0]} color={"red"}/>
+      <CouloirAccueil />
       {/* Pièce principale de projet */}
-      <Ground position={[0, 0, -25]} args={[20,20]}/>
-      <Ground position={[0, 10, -25]} args={[20,20]}/>
-      <Wall position={[-7.5, 5, -15]} rotation={[0, 0, 0]} color={"red"} args={[5,10]}/>
-      <Wall position={[7.5, 5, -15]} rotation={[0, 0, 0]} color={"red"} args={[5,10]}/>
-      <WallWithDoor position={[-10,5,-15]} rotation={[0, -Math.PI / 2, 0]} color={"green"}/>
-      <WallWithDoor position={[-10,5,-25]} rotation={[0, -Math.PI / 2, 0]} color={"green"}/>
-      <WallWithDoor position={[5,5,-35]} rotation={[0, 0, 0]} color={"blue"}/>
-      <Wall position={[7.5, 5, -35]} rotation={[0, 0, 0]} color={"blue"} args={[5,10]}/>
-      <Wall position={[-7.5, 5, -35]} rotation={[0, 0, 0]} color={"blue"} args={[5,10]}/>
-      <WallWithDoor position={[10,5,-20]} rotation={[0, -Math.PI / 2, 0]} color={"yellow"}/>
-      <Wall position={[10, 5, -17.5]} rotation={[0, -Math.PI / 2, 0]} color={"yellow"} args={[5,10]}/>
-      <Wall position={[10, 5, -32.5]} rotation={[0, -Math.PI / 2, 0]} color={"yellow"} args={[5,10]}/>
+      <SalleProjet 
+        onNear={(id) => setNearPainting(id)}
+        onLeave={() => setNearPainting(null)}
+      />
       {/* Couloir engagement personnels et contact*/}
-      <Ground position={[-15, 0, -30]} args={[10,4]}/>
-      <Ground position={[-15, 4, -30]} args={[10,4]}/>
-      <Ground position={[-15, 0, -20]} args={[10,4]}/>
-      <Ground position={[-15, 4, -20]} args={[10,4]}/>
-      <Wall position={[-15, 2, -22]} rotation={[0, 0, 0]} color={"blue"} args={[10,4]}/>
-      <Wall position={[-15, 2, -18]} rotation={[0, 0, 0]} color={"red"} args={[10,4]}/>
-      <WallWithDoor position={[-20,5,-15]} rotation={[0, -Math.PI / 2, 0]} color={"green"}/>
-      <Wall position={[-15, 2, -32]} rotation={[0, 0, 0]} color={"blue"} args={[10,4]}/>
-      <Wall position={[-15, 2, -28]} rotation={[0, 0, 0]} color={"red"} args={[10,4]}/>
-      <WallWithDoor position={[-20,5,-25]} rotation={[0, -Math.PI / 2, 0]} color={"green"}/>
+      <CouloirContact />
       {/* Pièce engagement personnels et contact*/}
-      <Ground position={[-25, 0, -20]} args={[10,10]}/>
-      <Ground position={[-25, 10, -20]} args={[10,10]}/>
-      <Ground position={[-25, 10, -30]} args={[10,10]}/>
-      <Ground position={[-25, 0, -30]} args={[10,10]}/>
-      <Wall position={[-25, 5, -15]} rotation={[0, 0, 0]} color={"red"} args={[10,10]}/>
-      <Wall position={[-25, 5, -35]} rotation={[0, 0, 0]} color={"red"} args={[10,10]}/>
-      <Wall position={[-30, 5, -25]} rotation={[0, -Math.PI / 2, 0]} color={"yellow"} args={[20,10]}/>
+      <SalleContact />
       {/* Couloir profil */}
-      <Ground position={[15, 0, -25]} args={[10,4]}/>
-      <Ground position={[15, 4, -25]} args={[10,4]}/>
-      <Wall position={[15, 2, -23]} rotation={[0, 0, 0]} color={"red"} args={[10,4]}/>
-      <Wall position={[15, 2, -27]} rotation={[0, 0, 0]} color={"blue"} args={[10,4]}/>
-      <WallWithDoor position={[20,5,-20]} rotation={[0, -Math.PI / 2, 0]} color={"green"}/>
+      <CouloirProfil />
       {/* Pièce profil */}
-      <Ground position={[25, 0, -25]} args={[10,10]}/>
-      <Ground position={[25, 10, -25]} args={[10,10]}/>
-      <Wall position={[25, 5, -30]} rotation={[0, 0, 0]} color={"blue"} args={[10,10]}/>
-      <Wall position={[25, 5, -20]} rotation={[0, 0, 0]} color={"red"} args={[10,10]}/>
-      <Wall position={[30, 5, -25]} rotation={[0, -Math.PI / 2, 0]} color={"yellow"} args={[10,10]}/>
+      <SalleProfil />
       {/* Couloir expérience */}
-      <Ground position={[0, 0, -40]} args={[4,10]}/>
-      <Ground position={[0, 4, -40]} args={[4,10]}/>
-      <Wall position={[2, 2, -40]} rotation={[0, -Math.PI / 2, 0]} color={"yellow"} args={[10,4]}/>
-      <Wall position={[-2, 2, -40]} rotation={[0, -Math.PI / 2, 0]} color={"green"} args={[10,4]}/>
-      <WallWithDoor position={[20,5,-20]} rotation={[0, -Math.PI / 2, 0]} color={"red"}/>
+      <CouloirExperience />
       {/* Pièce expérience */}
-      <Ground position={[0, 0, -50]} args={[10,10]}/>
-      <Ground position={[0, 10, -50]} args={[10,10]}/>
-      <WallWithDoor position={[5,5,-45]} rotation={[0, 0, 0]} color={"red"}/>
-      <Wall position={[5, 5, -50]} rotation={[0, -Math.PI / 2, 0]} color={"green"} args={[10,10]}/>
-      <Wall position={[-5, 5, -50]} rotation={[0, -Math.PI / 2, 0]} color={"yellow"} args={[10,10]}/>
-      <Wall position={[0,5,-55]} rotation={[0, 0, 0]} color={"blue"} args={[10,10]}/>
+      <SalleExperience />
     </Canvas>
+    {
+      nearPainting && !openProject && (
+        <div style={{
+          position: 'fixed', bottom: '2rem',
+          left: '50%', transform: 'translateX(-50%)',
+          background: 'rgba(0,0,0,0.7)',
+          color: 'white', padding: '0.8rem 1.5rem',
+          borderRadius: '8px', fontSize: '0.85rem'
+        }}>
+          Appuie sur E pour voir le projet
+        </div>
+      )
+    }
+    {
+      openProject && (
+        <div style={{
+          position: 'fixed', bottom: '2rem',
+          left: '50%', transform: 'translateX(-50%)',
+          background: 'rgba(0,0,0,0.7)',
+          color: 'white', padding: '0.8rem 1.5rem',
+          borderRadius: '8px', fontSize: '0.85rem'
+        }}>
+          Appuie sur E pour quitter
+        </div>
+      )
+    }
+    {
+      openProject && (
+        <div style={{
+          position: 'fixed', bottom: '50%',
+          left: '50%', transform: 'translateX(-50%)',
+          background: 'rgba(0,0,0,0.7)',
+          color: 'white', padding: '0.8rem 1.5rem',
+          borderRadius: '8px', fontSize: '0.85rem'
+        }}>
+          {Object.entries(projects[openProject]).map(([key, value]) => (
+          <div key={key}>
+            <strong>{key}</strong> : {Array.isArray(value) ? value.join(', ') : value}
+          </div>
+        ))}
+        <button onClick={() =>setOpenProject(null)}>
+          Fermer
+        </button>
+        </div>
+      )
+    }
+    </>
   )
 }
