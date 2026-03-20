@@ -1,4 +1,4 @@
-import { Ground, Wall, WallWithDoor } from "../Room";
+import { Ground, Wall, WallWithDoor, Plinthe } from "../Room";
 
 export function SalleContact() {
     return (
@@ -10,6 +10,13 @@ export function SalleContact() {
             <Wall position={[-25, 5, -15]} rotation={[0, 0, 0]} color={"red"} args={[10, 10]} />
             <Wall position={[-25, 5, -35]} rotation={[0, 0, 0]} color={"red"} args={[10, 10]} />
             <Wall position={[-30, 5, -25]} rotation={[0, -Math.PI / 2, 0]} color={"yellow"} args={[20, 10]} />
+            <Plinthe position={[-25, 0.1, -15.03]} rotation={[0, 0, 0]} length={10} />
+            <Plinthe position={[-25, 0.1, -34.97]} rotation={[0, 0, 0]} length={10} />
+            <Plinthe position={[-29.97, 0.1, -20]} rotation={[0, -Math.PI/2, 0]} length={10} />
+            <Plinthe position={[-29.97, 0.1, -30]} rotation={[0, -Math.PI/2, 0]} length={10} />
+            <Plinthe position={[-20.03, 0.1, -25]} rotation={[0, -Math.PI/2, 0]} length={6} />
+            <Plinthe position={[-20.03, 0.1, -16.5]} rotation={[0, -Math.PI/2, 0]} length={3} />
+            <Plinthe position={[-20.03, 0.1, -33.5]} rotation={[0, -Math.PI/2, 0]} length={3} />
         </group>
     )
 }

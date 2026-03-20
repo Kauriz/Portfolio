@@ -1,6 +1,7 @@
 import * as THREE from 'three'
 import { useTexture } from '@react-three/drei'
 import { useMemo } from 'react'
+import { useGLTF } from '@react-three/drei'
 
 useTexture.preload([
   '/textures/wall/wall_diff_1k.png',
@@ -12,156 +13,182 @@ useTexture.preload([
 ])
 
 
+useGLTF.preload('/models/frame/frame.gltf')
+
+// ─────────────────────────────────────────────
+// Hook utilitaire : clone + configure une texture
+// Chaque appel retourne une instance indépendante
+// → plus de mutation partagée entre les murs
+// ─────────────────────────────────────────────
+function useClonedTextures(paths, repeatX, repeatY) {
+  const textures = useTexture(paths)
+
+  return useMemo(() => {
+    return textures.map(t => {
+      const clone = t.clone()
+      clone.wrapS = clone.wrapT = THREE.RepeatWrapping
+      clone.repeat.set(repeatX, repeatY)
+      clone.needsUpdate = true
+      return clone
+    })
+  }, [repeatX, repeatY])
+}
+
+
 export function Ground({ position, args }) {
-  const [colorMap, normalMap, roughnessMap] = useTexture([
-    '/textures/floor/floor_02_diff_1k.png',
-    '/textures/floor/floor_02_nor_gl_1k.png',
-    '/textures/floor/floor_02_rough_1k.png'
-  ])
   const [width, height] = args
-  const plankSize = 2 // taille d'une planche en unités
-  colorMap.wrapS = colorMap.wrapT = THREE.RepeatWrapping
-  normalMap.wrapS = normalMap.wrapT = THREE.RepeatWrapping
-  roughnessMap.wrapS = roughnessMap.wrapT = THREE.RepeatWrapping
-
-  colorMap.repeat.set(width / plankSize, height / plankSize)
-  normalMap.repeat.set(width / plankSize, height / plankSize)
-  roughnessMap.repeat.set(width / plankSize, height / plankSize)
-  colorMap.needsUpdate = true
-  normalMap.needsUpdate = true
-  roughnessMap.needsUpdate = true
-  return (
-    <mesh rotation={[-Math.PI / 2, 0, 0]} position={position} >
-      <meshStandardMaterial
-        map={colorMap}
-        normalMap={normalMap}
-        roughnessMap={roughnessMap}
-        side={2}
-
-      />
-      <planeGeometry args={args} />
-    </mesh>
-  )
-}
-
-export function Wall({ position, rotation, color, args }) {
-  const [colorMap, normalMap, roughnessMap] = useTexture([
-    '/textures/wall/wall_diff_1k.png',
-    '/textures/wall/wall_nor_gl_1k.png',
-    '/textures/wall/wall_rough_1k.png'
-  ])
-  const [width, height] = args
-  const plankSize = 2 // taille d'une planche en unités
-  colorMap.wrapS = colorMap.wrapT = THREE.RepeatWrapping
-  normalMap.wrapS = normalMap.wrapT = THREE.RepeatWrapping
-  roughnessMap.wrapS = roughnessMap.wrapT = THREE.RepeatWrapping
-
-  colorMap.repeat.set(width / plankSize, height / plankSize)
-  normalMap.repeat.set(width / plankSize, height / plankSize)
-  roughnessMap.repeat.set(width / plankSize, height / plankSize)
-  colorMap.needsUpdate = true
-  normalMap.needsUpdate = true
-  roughnessMap.needsUpdate = true
-  return (
-    <mesh position={position} rotation={rotation}>
-      <planeGeometry args={args} />
-      <meshStandardMaterial
-        map={colorMap}
-        normalMap={normalMap}
-        roughnessMap={roughnessMap}
-        side={2}
-
-      />
-    </mesh>
-  )
-}
-
-export function WallWithDoor({ position, rotation, color }) {
-  const [colorMap, normalMap, roughnessMap] = useTexture([
-    '/textures/wall/wall_diff_1k.png',
-    '/textures/wall/wall_nor_gl_1k.png',
-    '/textures/wall/wall_rough_1k.png'
-  ])
   const plankSize = 2
-  const sideColor = useMemo(() => {
-    const clone = colorMap.clone()
-    clone.wrapS = clone.wrapT = THREE.RepeatWrapping
-    clone.repeat.set(3 / plankSize, 10 / plankSize)
-    clone.needsUpdate = true
-    return clone
-  }, [colorMap])
-  const sideNormal = useMemo(() => {
-    const clone = normalMap.clone()
-    clone.wrapS = clone.wrapT = THREE.RepeatWrapping
-    clone.repeat.set(3 / plankSize, 10 / plankSize)
-    clone.needsUpdate = true
-    return clone
-  }, [normalMap])
-  const sideRoughness = useMemo(() => {
-    const clone = roughnessMap.clone()
-    clone.wrapS = clone.wrapT = THREE.RepeatWrapping
-    clone.repeat.set(3 / plankSize, 10 / plankSize)
-    clone.needsUpdate = true
-    return clone
-  }, [roughnessMap])
 
-  const topColor = useMemo(() => {
-    const clone = colorMap.clone()
-    clone.wrapS = clone.wrapT = THREE.RepeatWrapping
-    clone.repeat.set(10 / plankSize, 6 / plankSize)
-    clone.needsUpdate = true
-    return clone
-  }, [colorMap])
-  const topNormal = useMemo(() => {
-    const clone = normalMap.clone()
-    clone.wrapS = clone.wrapT = THREE.RepeatWrapping
-    clone.repeat.set(10 / plankSize, 6 / plankSize)
-    clone.needsUpdate = true
-    return clone
-  }, [normalMap])
-  const topRoughness = useMemo(() => {
-    const clone = roughnessMap.clone()
-    clone.wrapS = clone.wrapT = THREE.RepeatWrapping
-    clone.repeat.set(10 / plankSize, 6 / plankSize)
-    clone.needsUpdate = true
-    return clone
-  }, [roughnessMap])
+  const [colorMap, normalMap, roughnessMap] = useClonedTextures(
+    [
+      '/textures/floor/floor_02_diff_1k.png',
+      '/textures/floor/floor_02_nor_gl_1k.png',
+      '/textures/floor/floor_02_rough_1k.png',
+    ],
+    width / plankSize,
+    height / plankSize
+  )
+
+  return (
+    <mesh rotation={[-Math.PI / 2, 0, 0]} position={position} receiveShadow>
+      <planeGeometry args={args} />
+      <meshStandardMaterial
+        map={colorMap}
+        normalMap={normalMap}
+        roughnessMap={roughnessMap}
+        side={2}
+      />
+    </mesh>
+  )
+}
+
+export function Wall({ position, rotation, args }) {
+  const [width, height] = args
+  const plankSize = 2
+
+  const [colorMap, normalMap, roughnessMap] = useClonedTextures(
+    [
+      '/textures/wall/wall_diff_1k.png',
+      '/textures/wall/wall_nor_gl_1k.png',
+      '/textures/wall/wall_rough_1k.png',
+    ],
+    width / plankSize,
+    height / plankSize
+  )
+
+  return (
+    <mesh position={position} rotation={rotation} receiveShadow castShadow>
+      <planeGeometry args={args} />
+      <meshStandardMaterial
+        map={colorMap}
+        normalMap={normalMap}
+        roughnessMap={roughnessMap}
+        side={THREE.DoubleSide}
+      />
+    </mesh>
+  )
+}
+
+
+export function WallWithDoor({ position, rotation }) {
+  const plankSize = 2
+
+  // Panneau latéral : 3 × 10
+  const [sideColor, sideNormal, sideRoughness] = useClonedTextures(
+    [
+      '/textures/wall/wall_diff_1k.png',
+      '/textures/wall/wall_nor_gl_1k.png',
+      '/textures/wall/wall_rough_1k.png',
+    ],
+    3 / plankSize,
+    10 / plankSize
+  )
+
+  // Panneau du dessus : 4 × 6
+  const [topColor, topNormal, topRoughness] = useClonedTextures(
+    [
+      '/textures/wall/wall_diff_1k.png',
+      '/textures/wall/wall_nor_gl_1k.png',
+      '/textures/wall/wall_rough_1k.png',
+    ],
+    4 / plankSize,
+    6 / plankSize
+  )
+
+  const sideMat = (
+    <meshStandardMaterial
+      map={sideColor}
+      normalMap={sideNormal}
+      roughnessMap={sideRoughness}
+      side={THREE.DoubleSide}
+    />
+  )
+
+  const topMat = (
+    <meshStandardMaterial
+      map={topColor}
+      normalMap={topNormal}
+      roughnessMap={topRoughness}
+      side={THREE.DoubleSide}
+    />
+  )
 
   return (
     <group position={position} rotation={rotation}>
-      {/* Côté gauche */}
-      <mesh position={[-8.5, 0, 0]}>
+      {/* Panneau gauche */}
+      <mesh position={[-8.5, 0, 0]} receiveShadow castShadow>
         <planeGeometry args={[3, 10]} />
-        <meshStandardMaterial
-          map={sideColor}
-          normalMap={sideNormal}
-          roughnessMap={sideRoughness}
-          side={2}
-
-        />
+        {sideMat}
       </mesh>
-      {/* Côté droit */}
-      <mesh position={[-1.5, 0, 0]}>
+
+      {/* Panneau droit */}
+      <mesh position={[-1.5, 0, 0]} receiveShadow castShadow>
         <planeGeometry args={[3, 10]} />
-        <meshStandardMaterial
-          map={sideColor}
-          normalMap={sideNormal}
-          roughnessMap={sideRoughness}
-          side={2}
-
-        />
+        {sideMat}
       </mesh>
-      {/* Dessus */}
-      <mesh position={[-5, 2, 0]}>
+
+      {/* Panneau du dessus */}
+      <mesh position={[-5, 2, 0]} receiveShadow castShadow>
         <planeGeometry args={[4, 6]} />
-        <meshStandardMaterial
-          map={topColor}
-          normalMap={topNormal}
-          roughnessMap={topRoughness}
-          side={2}
-
-        />
+        {topMat}
       </mesh>
     </group>
   )
 }
+
+export function PaintingFrame({ position, rotation, scale }) {
+  const { scene } = useGLTF('/models/frame/frame.gltf')
+  const clone = useMemo(() => scene.clone(), [scene])
+
+  return <primitive object={clone} position={position} rotation={rotation} scale={scale} />
+}
+
+export function Plinthe({ position, rotation, length }) {
+  const [colorMap, normalMap, roughnessMap] = useClonedTextures(
+    [
+      '/textures/baseboard/baseboard_diff_1k.png',
+      '/textures/baseboard/baseboard_nor_gl_1k.png',
+      '/textures/baseboard/baseboard_rough_1k.png',
+    ],
+    0.5,
+    3,
+  )
+  colorMap.rotation = Math.PI / 2
+  colorMap.center.set(0.5, 0.5)
+  normalMap.rotation = Math.PI / 2
+  normalMap.center.set(0.5, 0.5)
+  roughnessMap.rotation = Math.PI / 2
+  roughnessMap.center.set(0.5, 0.5)
+  return (
+    <mesh position={position} rotation={rotation} castShadow>
+      <boxGeometry args={[length, 1, 0.05]} />
+      <meshStandardMaterial
+        map={colorMap}
+        normalMap={normalMap}
+        roughnessMap={roughnessMap}
+        color={"#80684e"}
+      />
+    </mesh>
+  )
+}
+

@@ -12,10 +12,13 @@ import { SalleExperience } from './components/halls/SalleExperience'
 import { Painting } from './components/Painting'
 import { useEffect, useState } from 'react'
 import { projects } from './data/projects'
+import { useRef } from 'react'
+import * as THREE from 'three'
 
 export default function App() {
   const [nearPainting, setNearPainting] = useState(null)
   const [openProject, setOpenProject] = useState(null)
+  const playerPositionRef = useRef(new THREE.Vector3())
   useEffect(() => {
     const onKeyDown = (e) => {
       if (e.code === 'KeyE' && nearPainting) {
@@ -32,7 +35,8 @@ export default function App() {
     <>
     <Canvas style={{ width: '100%', height: '100vh' }} camera={{ position: [0, 1, 2], fov: 75 }}>
       <ambientLight intensity={2} />
-      <Player openProject={openProject}/>
+      <directionalLight position={[10, 10, 5]} intensity={3} />
+      <Player openProject={openProject} playerPositionRef={playerPositionRef}/>
       {/* Hall d'accueil */}
       <SalleAccueil />
       {/* Couloir Hall d'accueil */}
@@ -41,6 +45,7 @@ export default function App() {
       <SalleProjet 
         onNear={(id) => setNearPainting(id)}
         onLeave={() => setNearPainting(null)}
+        playerPositionRef={playerPositionRef}
       />
       {/* Couloir engagement personnels et contact*/}
       <CouloirContact />

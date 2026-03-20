@@ -1,4 +1,4 @@
-import { Ground, Wall, WallWithDoor } from "../Room";
+import { Ground, Wall, WallWithDoor, Plinthe } from "../Room";
 
 export function SalleExperience() {
     return (
@@ -9,6 +9,11 @@ export function SalleExperience() {
             <Wall position={[5, 5, -50]} rotation={[0, -Math.PI / 2, 0]} color={"green"} args={[10, 10]} />
             <Wall position={[-5, 5, -50]} rotation={[0, -Math.PI / 2, 0]} color={"yellow"} args={[10, 10]} />
             <Wall position={[0, 5, -55]} rotation={[0, 0, 0]} color={"blue"} args={[10, 10]} />
+            <Plinthe position={[0, 0.1, -54.97]} rotation={[0, 0, 0]} length={10} />
+            <Plinthe position={[-4.97, 0.1, -50]} rotation={[0, -Math.PI/2, 0]} length={10} />
+            <Plinthe position={[4.97, 0.1, -50]} rotation={[0, -Math.PI/2, 0]} length={10} />
+            <Plinthe position={[3.5, 0.1, -45.03]} rotation={[0, 0, 0]} length={3} />
+            <Plinthe position={[-3.5, 0.1, -45.03]} rotation={[0, 0, 0]} length={3} />
         </group>
     )
 }

@@ -1,4 +1,4 @@
-import { Ground, Wall, WallWithDoor } from "../Room";
+import { Ground, Wall, WallWithDoor, Plinthe } from "../Room";
 
 export function CouloirAccueil() {
     return (
@@ -8,6 +8,8 @@ export function CouloirAccueil() {
             <Wall position={[2, 2, -10]} rotation={[0, -Math.PI / 2, 0]} color={"yellow"} args={[10, 4]} />
             <Wall position={[-2, 2, -10]} rotation={[0, Math.PI / 2, 0]} color={"green"} args={[10, 4]} />
             <WallWithDoor position={[5, 5, -15]} rotation={[0, 0, 0]} color={"red"} />
+            <Plinthe position={[1.97, 0.1, -10]} rotation={[0, -Math.PI/2, 0]} length={10.1} />
+            <Plinthe position={[-1.97, 0.1, -10]} rotation={[0, -Math.PI/2, 0]} length={10.1} />
         </group>
     )
 }

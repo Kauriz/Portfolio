@@ -14,5 +14,9 @@ export const projects = {
   projet4: {
     title: 'Portfolio',
     description: "C'est un site pour me présenter professionnelement.",
+  },
+  projet5: {
+    title: 'Code Life',
+    description: "C'est une implémentation de Smile Life",
   }
 }
