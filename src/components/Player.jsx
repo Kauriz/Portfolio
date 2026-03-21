@@ -56,6 +56,7 @@ export function Player({ openProject, playerPositionRef }) {
 
       // Rayon du joueur vers la caméra
       const camRaycaster = new THREE.Raycaster()
+      camRaycaster.layers.set(1)
       const camDirection = playerRef.current.position.clone().sub(idealCamPos).normalize()
       camRaycaster.set(idealCamPos, camDirection)
       const camIntersects = camRaycaster.intersectObjects(scene.children, true)

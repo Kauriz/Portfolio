@@ -14,6 +14,7 @@ useTexture.preload([
 
 
 useGLTF.preload('/models/frame/frame.gltf')
+useGLTF.preload('/models/sofa/sofa.gltf')
 
 // ─────────────────────────────────────────────
 // Hook utilitaire : clone + configure une texture
@@ -50,7 +51,7 @@ export function Ground({ position, args }) {
   )
 
   return (
-    <mesh rotation={[-Math.PI / 2, 0, 0]} position={position} receiveShadow>
+    <mesh rotation={[-Math.PI / 2, 0, 0]} onUpdate={(mesh) => mesh.layers.enable(1)} position={position} receiveShadow >
       <planeGeometry args={args} />
       <meshStandardMaterial
         map={colorMap}
@@ -65,6 +66,8 @@ export function Ground({ position, args }) {
 export function Wall({ position, rotation, args }) {
   const [width, height] = args
   const plankSize = 2
+  const thickness = 0.5
+
 
   const [colorMap, normalMap, roughnessMap] = useClonedTextures(
     [
@@ -77,8 +80,8 @@ export function Wall({ position, rotation, args }) {
   )
 
   return (
-    <mesh position={position} rotation={rotation} receiveShadow castShadow>
-      <planeGeometry args={args} />
+    <mesh position={position} rotation={rotation} onUpdate={(mesh) => mesh.layers.enable(1)} receiveShadow castShadow>
+      <boxGeometry args={[width, height, thickness]} />
       <meshStandardMaterial
         map={colorMap}
         normalMap={normalMap}
@@ -136,19 +139,19 @@ export function WallWithDoor({ position, rotation }) {
   return (
     <group position={position} rotation={rotation}>
       {/* Panneau gauche */}
-      <mesh position={[-8.5, 0, 0]} receiveShadow castShadow>
+      <mesh position={[-8.5, 0, 0]} receiveShadow castShadow onUpdate={(mesh) => mesh.layers.enable(1)}>
         <planeGeometry args={[3, 10]} />
         {sideMat}
       </mesh>
 
       {/* Panneau droit */}
-      <mesh position={[-1.5, 0, 0]} receiveShadow castShadow>
+      <mesh position={[-1.5, 0, 0]} receiveShadow castShadow onUpdate={(mesh) => mesh.layers.enable(1)}>
         <planeGeometry args={[3, 10]} />
         {sideMat}
       </mesh>
 
       {/* Panneau du dessus */}
-      <mesh position={[-5, 2, 0]} receiveShadow castShadow>
+      <mesh position={[-5, 2, 0]} receiveShadow castShadow onUpdate={(mesh) => mesh.layers.enable(1)}>
         <planeGeometry args={[4, 6]} />
         {topMat}
       </mesh>
@@ -180,7 +183,7 @@ export function Plinthe({ position, rotation, length }) {
   roughnessMap.rotation = Math.PI / 2
   roughnessMap.center.set(0.5, 0.5)
   return (
-    <mesh position={position} rotation={rotation} castShadow>
+    <mesh position={position} rotation={rotation} onUpdate={(mesh) => mesh.layers.enable(1)} castShadow>
       <boxGeometry args={[length, 1, 0.05]} />
       <meshStandardMaterial
         map={colorMap}
@@ -192,3 +195,83 @@ export function Plinthe({ position, rotation, length }) {
   )
 }
 
+export function Door({ position, rotation, scale }) {
+  const { scene } = useGLTF('/models/door.glb')
+  const clone = useMemo(() => {
+    const c = scene.clone()
+    const box = new THREE.Box3().setFromObject(c)
+    const center = box.getCenter(new THREE.Vector3())
+    c.children.forEach(child => {
+      child.position.sub(center)
+    })
+    c.traverse((child) => {
+      if (child.isMesh) {
+        child.raycast = () => {}
+      }
+    })
+    return c
+  }, [scene])
+
+  return (
+    <group position={position} rotation={rotation}>
+      <primitive object={clone} scale={scale} />
+      
+      {/* Collider invisible */}
+      <mesh visible={false} onUpdate={(mesh) => mesh.layers.enable(1)}>
+        <boxGeometry args={[3, 6.5, 1]} />
+        <meshStandardMaterial />
+      </mesh>
+    </group>
+  )
+}
+
+export function Sofa({ position, rotation, scale }) {
+  const { scene } = useGLTF('/models/sofa/sofa.gltf')
+  const clone = useMemo(() => {
+    const c = scene.clone()
+    c.traverse((child) => {
+      if (child.isMesh) {
+        child.raycast = () => {}
+      }
+    })
+    return c
+  }, [scene])
+
+  return (
+    <group position={position} rotation={rotation}>
+      {/* Modèle visible — ignoré par le raycaster */}
+      <primitive object={clone} scale={scale} />
+
+      {/* Collider invisible */}
+      <mesh visible={false} onUpdate={(mesh) => mesh.layers.enable(1)}>
+        <boxGeometry args={[3.5, 2.5, 1.35]} />
+        <meshStandardMaterial />
+      </mesh>
+    </group>
+  )
+}
+
+export function Dresser({ position, rotation, scale }) {
+  const { scene } = useGLTF('/models/dresser.glb')
+  const clone = useMemo(() => {
+  const c = scene.clone()
+  c.traverse((child) => {
+    if (child.isMesh) {
+      child.raycast = () => {}
+    }
+  })
+  return c
+}, [scene])
+
+  return (
+    <group position={position} rotation={rotation}>
+      <primitive object={clone} scale={scale} />
+      
+      {/* Collider invisible */}
+      <mesh visible={false} >
+        <boxGeometry args={[1.4, 1.5, 1]} />
+        <meshStandardMaterial />
+      </mesh>
+    </group>
+  )
+}
