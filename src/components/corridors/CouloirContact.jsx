@@ -1,4 +1,4 @@
-import { Ground, Wall, WallWithDoor, Plinthe } from "../Room";
+import { Ground, Wall, WallWithDoor, Plinthe, Pedestal, CatStatue } from "../Room";
 
 export function CouloirContact() {
     return (

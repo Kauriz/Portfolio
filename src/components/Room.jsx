@@ -2,6 +2,7 @@ import * as THREE from 'three'
 import { useTexture } from '@react-three/drei'
 import { useMemo } from 'react'
 import { useGLTF } from '@react-three/drei'
+import { useRef } from 'react'
 
 useTexture.preload([
   '/textures/wall/wall_diff_1k.png',
@@ -87,6 +88,9 @@ export function Wall({ position, rotation, args }) {
         normalMap={normalMap}
         roughnessMap={roughnessMap}
         side={THREE.DoubleSide}
+        color={"#ffffff"}
+        emissive={"#eeeeee"}
+        emissiveIntensity={0.1}
       />
     </mesh>
   )
@@ -124,6 +128,9 @@ export function WallWithDoor({ position, rotation }) {
       normalMap={sideNormal}
       roughnessMap={sideRoughness}
       side={THREE.DoubleSide}
+      color={"#ffffff"}
+      emissive={"#eeeeee"}
+      emissiveIntensity={0.1}
     />
   )
 
@@ -133,6 +140,9 @@ export function WallWithDoor({ position, rotation }) {
       normalMap={topNormal}
       roughnessMap={topRoughness}
       side={THREE.DoubleSide}
+      color={"#ffffff"}
+      emissive={"#eeeeee"}
+      emissiveIntensity={0.1}
     />
   )
 
@@ -206,7 +216,7 @@ export function Door({ position, rotation, scale }) {
     })
     c.traverse((child) => {
       if (child.isMesh) {
-        child.raycast = () => {}
+        child.raycast = () => { }
       }
     })
     return c
@@ -215,7 +225,7 @@ export function Door({ position, rotation, scale }) {
   return (
     <group position={position} rotation={rotation}>
       <primitive object={clone} scale={scale} />
-      
+
       {/* Collider invisible */}
       <mesh visible={false} onUpdate={(mesh) => mesh.layers.enable(1)}>
         <boxGeometry args={[3, 6.5, 1]} />
@@ -231,7 +241,7 @@ export function Sofa({ position, rotation, scale }) {
     const c = scene.clone()
     c.traverse((child) => {
       if (child.isMesh) {
-        child.raycast = () => {}
+        child.raycast = () => { }
       }
     })
     return c
@@ -254,24 +264,382 @@ export function Sofa({ position, rotation, scale }) {
 export function Dresser({ position, rotation, scale }) {
   const { scene } = useGLTF('/models/dresser.glb')
   const clone = useMemo(() => {
-  const c = scene.clone()
-  c.traverse((child) => {
-    if (child.isMesh) {
-      child.raycast = () => {}
-    }
-  })
-  return c
-}, [scene])
+    const c = scene.clone()
+    c.traverse((child) => {
+      if (child.isMesh) {
+        child.raycast = () => { }
+      }
+    })
+    return c
+  }, [scene])
 
   return (
     <group position={position} rotation={rotation}>
       <primitive object={clone} scale={scale} />
-      
+
       {/* Collider invisible */}
       <mesh visible={false} >
         <boxGeometry args={[1.4, 1.5, 1]} />
         <meshStandardMaterial />
       </mesh>
     </group>
+  )
+}
+
+export function Lamp({ position, scale, rotation }) {
+  const { scene } = useGLTF('/models/lamp.glb')
+  const clone = useMemo(() => {
+    const c = scene.clone()
+    const box = new THREE.Box3().setFromObject(c)
+    const center = box.getCenter(new THREE.Vector3())
+    c.children.forEach(child => {
+      child.position.sub(center)
+    })
+    c.traverse((child) => {
+      if (child.isMesh) {
+        child.raycast = () => { }
+      }
+    })
+    return c
+  }, [scene])
+
+  return (
+    <primitive object={clone} scale={scale} position={position} rotation={rotation} />
+  )
+}
+
+export function OpenBook({ position, scale, rotation }) {
+  const { scene } = useGLTF('/models/openBook.glb')
+  const clone = useMemo(() => {
+    const c = scene.clone()
+    const box = new THREE.Box3().setFromObject(c)
+    const center = box.getCenter(new THREE.Vector3())
+    c.children.forEach(child => {
+      child.position.sub(center)
+    })
+    c.traverse((child) => {
+      if (child.isMesh) {
+        child.raycast = () => { }
+      }
+    })
+    return c
+  }, [scene])
+
+  return (
+    <primitive object={clone} scale={scale} position={position} rotation={rotation} />
+  )
+}
+
+export function WallLamp({ position, scale, rotation }) {
+  const { scene } = useGLTF('/models/wallLamp.glb')
+  const clone = useMemo(() => {
+    const c = scene.clone()
+    const box = new THREE.Box3().setFromObject(c)
+    const center = box.getCenter(new THREE.Vector3())
+    c.children.forEach(child => {
+      child.position.sub(center)
+    })
+    c.traverse((child) => {
+      if (child.isMesh) {
+        child.raycast = () => { }
+      }
+    })
+    return c
+  }, [scene])
+
+  return (
+    <primitive object={clone} scale={scale} position={position} rotation={rotation} />
+  )
+}
+
+export function Pedestal({ position, scale }) {
+  const { scene } = useGLTF('/models/pedestal.glb')
+  const [colorMap, normalMap, roughnessMap] = useTexture([
+    '/textures/baseboard/baseboard_diff_1k.png',
+    '/textures/baseboard/baseboard_nor_gl_1k.png',
+    '/textures/baseboard/baseboard_rough_1k.png',
+  ])
+  const clone = useMemo(() => {
+    const c = scene.clone()
+    c.traverse((child) => {
+      if (child.isMesh) {
+        child.raycast = () => { }
+        child.material = new THREE.MeshStandardMaterial({
+          map: colorMap,
+          normalMap: normalMap,
+          roughnessMap: roughnessMap,
+        })
+      }
+    })
+    return c
+  }, [scene, colorMap, normalMap, roughnessMap])
+
+  return (
+    <group position={position}>
+      <primitive object={clone} scale={scale} rotation={[0, 0, 0]} />
+      <mesh visible={false}>
+        <cylinderGeometry args={[1, 0.5, 4, 5]} />
+        <meshStandardMaterial />
+      </mesh>
+    </group>
+  )
+}
+
+export function CatStatue({ position, rotation, scale }) {
+  const { scene } = useGLTF('/models/concrete_cat_statue_1k.gltf/concrete_cat_statue_1k.gltf')
+  const clone = useMemo(() => scene.clone(), [scene])
+  return (
+    <primitive
+      object={clone}
+      position={position}
+      rotation={rotation}
+      scale={scale}
+    />
+  )
+}
+
+export function RopeBarrier({ position, rotation, scale }) {
+  const { scene } = useGLTF('/models/ropeBarrier.glb')
+
+  const clone = useMemo(() => {
+    const c = scene.clone()
+    const box = new THREE.Box3().setFromObject(c)
+    const center = box.getCenter(new THREE.Vector3())
+
+    c.children.forEach(child => {
+      child.position.sub(center)
+    })
+
+    c.traverse((child) => {
+      if (child.isMesh) {
+        child.raycast = () => { }
+      }
+    })
+    return c
+  }, [scene])
+
+  return (
+    <group position={position} rotation={rotation}>
+      <primitive object={clone} scale={scale} />
+      <mesh visible={false}>
+        <boxGeometry args={[3, 1.5, 0.5]} />
+        <meshStandardMaterial />
+      </mesh>
+    </group>
+  )
+}
+
+export function Linkedin({ position, scale, rotation }) {
+  const { scene } = useGLTF('/models/linkedin.glb')
+  const clone = useMemo(() => {
+    const c = scene.clone()
+    const box = new THREE.Box3().setFromObject(c)
+    const center = box.getCenter(new THREE.Vector3())
+    c.children.forEach(child => {
+      child.position.sub(center)
+    })
+    c.traverse((child) => {
+      if (child.isMesh) {
+        child.raycast = () => { }
+      }
+    })
+    return c
+  }, [scene])
+
+  return (
+    <primitive object={clone} scale={scale} position={position} rotation={rotation} />
+  )
+}
+
+export function Mail({ position, scale, rotation }) {
+  const { scene } = useGLTF('/models/mail.glb')
+  const clone = useMemo(() => {
+    const c = scene.clone()
+    const box = new THREE.Box3().setFromObject(c)
+    const center = box.getCenter(new THREE.Vector3())
+    c.children.forEach(child => {
+      child.position.sub(center)
+    })
+    c.traverse((child) => {
+      if (child.isMesh) {
+        child.raycast = () => { }
+      }
+    })
+    return c
+  }, [scene])
+
+  return (
+    <primitive object={clone} scale={scale} position={position} rotation={rotation} />
+  )
+}
+
+export function Piano({ position, rotation, scale }) {
+  const { scene } = useGLTF('/models/piano.glb')
+
+  const clone = useMemo(() => {
+    const c = scene.clone()
+    const box = new THREE.Box3().setFromObject(c)
+    const center = box.getCenter(new THREE.Vector3())
+
+    c.children.forEach(child => {
+      child.position.sub(center)
+    })
+
+    c.traverse((child) => {
+      if (child.isMesh) {
+        child.raycast = () => { }
+      }
+    })
+    return c
+  }, [scene])
+
+  return (
+    <group position={position} rotation={rotation}>
+      <primitive object={clone} scale={scale} />
+      <mesh visible={false}>
+        <boxGeometry args={[3.8, 3.5, 2.5]} />
+        <meshStandardMaterial />
+      </mesh>
+    </group>
+  )
+}
+
+export function Bookshelf({ position, rotation, scale }) {
+  const { scene } = useGLTF('/models/bookshelf.glb')
+
+  const clone = useMemo(() => {
+    const c = scene.clone()
+    const box = new THREE.Box3().setFromObject(c)
+    const center = box.getCenter(new THREE.Vector3())
+
+    c.children.forEach(child => {
+      child.position.sub(center)
+    })
+
+    c.traverse((child) => {
+      if (child.isMesh) {
+        child.raycast = () => { }
+      }
+    })
+    return c
+  }, [scene])
+
+  return (
+    <group position={position} rotation={rotation}>
+      <primitive object={clone} scale={scale} />
+      <mesh visible={false}>
+        <boxGeometry args={[3.8, 3.5, 2.5]} />
+        <meshStandardMaterial />
+      </mesh>
+    </group>
+  )
+}
+
+export function SleepingCat({ position, rotation, scale }) {
+  const { scene } = useGLTF('/models/sleepingCat.glb')
+
+  const clone = useMemo(() => {
+    const c = scene.clone()
+    const box = new THREE.Box3().setFromObject(c)
+    const center = box.getCenter(new THREE.Vector3())
+
+    c.children.forEach(child => {
+      child.position.sub(center)
+    })
+
+    c.traverse((child) => {
+      if (child.isMesh) {
+        child.raycast = () => { }
+      }
+    })
+    return c
+  }, [scene])
+
+  return (
+    <primitive object={clone} scale={scale} />
+  )
+}
+
+export function Table({ position, rotation, scale }) {
+  const { scene } = useGLTF('/models/table.glb')
+
+  const clone = useMemo(() => {
+    const c = scene.clone()
+    const box = new THREE.Box3().setFromObject(c)
+    const center = box.getCenter(new THREE.Vector3())
+
+    c.children.forEach(child => {
+      child.position.sub(center)
+    })
+
+    c.traverse((child) => {
+      if (child.isMesh) {
+        child.raycast = () => { }
+      }
+    })
+    return c
+  }, [scene])
+
+  return (
+    <group position={position} rotation={rotation}>
+      <primitive object={clone} scale={scale} />
+      <mesh visible={false}>
+        <boxGeometry args={[1.7, 2, 2]} />
+        <meshStandardMaterial />
+      </mesh>
+    </group>
+  )
+}
+
+export function Chair({ position, rotation, scale }) {
+  const { scene } = useGLTF('/models/chair.glb')
+
+  const clone = useMemo(() => {
+    const c = scene.clone()
+    const box = new THREE.Box3().setFromObject(c)
+    const center = box.getCenter(new THREE.Vector3())
+
+    c.children.forEach(child => {
+      child.position.sub(center)
+    })
+
+    c.traverse((child) => {
+      if (child.isMesh) {
+        child.raycast = () => { }
+      }
+    })
+    return c
+  }, [scene])
+
+  return (
+    <group position={position} rotation={rotation}>
+      <primitive object={clone} scale={scale} />
+      <mesh visible={false}>
+        <boxGeometry args={[1, 2.5, 1.1]} />
+        <meshStandardMaterial />
+      </mesh>
+    </group>
+  )
+}
+
+export function Chess({ position, scale, rotation }) {
+  const { scene } = useGLTF('/models/chess.glb')
+  const clone = useMemo(() => {
+    const c = scene.clone()
+    const box = new THREE.Box3().setFromObject(c)
+    const center = box.getCenter(new THREE.Vector3())
+    c.children.forEach(child => {
+      child.position.sub(center)
+    })
+    c.traverse((child) => {
+      if (child.isMesh) {
+        child.raycast = () => { }
+      }
+    })
+    return c
+  }, [scene])
+
+  return (
+    <primitive object={clone} scale={scale} position={position} rotation={rotation} />
   )
 }

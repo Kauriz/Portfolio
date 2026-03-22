@@ -1,62 +1,8 @@
-import { Ground, Wall, WallWithDoor, PaintingFrame, Plinthe, Sofa } from "../Room";
+import { Ground, Wall, WallWithDoor, PaintingFrame, Plinthe, Sofa, WallLamp } from "../Room";
 import { Painting } from "../Painting";
 import { useGLTF } from "@react-three/drei";
-import { useMemo } from 'react'
-import { useTexture } from "@react-three/drei";
-import * as THREE from 'three'
-
 
 useGLTF.preload('/models/pillar.glb')
-
-
-
-
-export function Pedestal({ position, scale }) {
-    const { scene } = useGLTF('/models/pedestal.glb')
-    const [colorMap, normalMap, roughnessMap] = useTexture([
-        '/textures/baseboard/baseboard_diff_1k.png',
-        '/textures/baseboard/baseboard_nor_gl_1k.png',
-        '/textures/baseboard/baseboard_rough_1k.png',
-    ])
-    const clone = useMemo(() => {
-        const c = scene.clone()
-        c.traverse((child) => {
-            if (child.isMesh) {
-                child.raycast = () => { }
-                child.material = new THREE.MeshStandardMaterial({
-                    map: colorMap,
-                    normalMap: normalMap,
-                    roughnessMap: roughnessMap,
-                    color: "#fdf1d5"
-                })
-            }
-        })
-        return c
-    }, [scene, colorMap, normalMap, roughnessMap])
-
-    return (
-        <group position={position}>
-            <primitive object={clone} scale={scale} rotation={[0, 0, 0]} />
-            <mesh visible={false}>
-                <cylinderGeometry args={[1, 0.5, 4, 5]} />
-                <meshStandardMaterial />
-            </mesh>
-        </group>
-    )
-}
-
-export function CatStatue({ position, rotation, scale }) {
-    const { scene } = useGLTF('/models/concrete_cat_statue_1k.gltf/concrete_cat_statue_1k.gltf')
-    const clone = useMemo(() => scene.clone(), [scene])
-    return (
-        <primitive
-            object={clone}
-            position={position}
-            rotation={rotation}
-            scale={scale}
-        />
-    )
-}
 
 export function SalleProjet({ onNear, onLeave, playerPositionRef }) {
     return (
@@ -127,9 +73,9 @@ export function SalleProjet({ onNear, onLeave, playerPositionRef }) {
                 scale={[7, 7, 7]}
                 playerPositionRef={playerPositionRef}
             />
-            <Pedestal position={[-5, 0.01, -30]} scale={[0.13, 0.161, 0.13]} />
-            <CatStatue position={[-4.99, 1.84, -29.9]} scale={[3, 3, 3]} />
             <Sofa position={[-8.5, 0, -25]} scale={[2.5, 2.5, 2.5]} rotation={[0, Math.PI / 2, 0]} />
+            <WallLamp position={[-5, 3, -15.18]} rotation={[0, Math.PI, 0]} scale={[1,1,1]} />
+            <WallLamp position={[5, 3, -15.18]} rotation={[0, Math.PI, 0]} scale={[1,1,1]} />
         </group>
     )
 }
