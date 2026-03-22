@@ -9,7 +9,6 @@ import { CouloirProfil } from './components/corridors/CouloirProfil'
 import { SalleProfil } from './components/halls/SalleProfil'
 import { CouloirExperience } from './components/corridors/CouloirExperience'
 import { SalleExperience } from './components/halls/SalleExperience'
-import { Painting } from './components/Painting'
 import { useEffect, useState } from 'react'
 import { projects } from './data/projects'
 import { useRef } from 'react'
@@ -34,8 +33,8 @@ export default function App() {
   return(
     <>
     <Canvas style={{ width: '100%', height: '100vh' }} camera={{ position: [0, 1, 2], fov: 75 }}>
-      <ambientLight intensity={2} />
-      <directionalLight position={[10, 10, 5]} intensity={3} />
+      <ambientLight color="#ffecd0" intensity={0.3} />
+      <directionalLight position={[10, 10, 5]} intensity={1} />
       <Player openProject={openProject} playerPositionRef={playerPositionRef}/>
       {/* Hall d'accueil */}
       <SalleAccueil />

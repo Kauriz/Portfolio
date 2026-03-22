@@ -2,7 +2,7 @@ import * as THREE from 'three'
 import { useTexture } from '@react-three/drei'
 import { useMemo } from 'react'
 import { useGLTF } from '@react-three/drei'
-import { useRef } from 'react'
+
 
 useTexture.preload([
   '/textures/wall/wall_diff_1k.png',
@@ -348,7 +348,17 @@ export function WallLamp({ position, scale, rotation }) {
   }, [scene])
 
   return (
-    <primitive object={clone} scale={scale} position={position} rotation={rotation} />
+    <group position={position} rotation={rotation}>
+      <primitive object={clone} scale={scale} />
+      <pointLight
+        color="#ffb347" 
+        intensity={8} 
+        distance={6} 
+        decay={2}
+        position={[0, 0, 0.5]}
+        castShadow
+      />
+    </group>
   )
 }
 
@@ -528,7 +538,7 @@ export function Bookshelf({ position, rotation, scale }) {
     <group position={position} rotation={rotation}>
       <primitive object={clone} scale={scale} />
       <mesh visible={false}>
-        <boxGeometry args={[3.8, 3.5, 2.5]} />
+        <boxGeometry args={[3.4, 4.5, 1]} />
         <meshStandardMaterial />
       </mesh>
     </group>

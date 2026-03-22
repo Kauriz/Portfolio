@@ -70,7 +70,7 @@ export function Shoes1({ position, scale, rotation }) {
 }
 
 export function Carpet({ position, scale, rotation }) {
-  const { scene } = useGLTF('/models/carpet.glb')
+  const { scene } = useGLTF('/models/carpetAccueil.glb')
   const clone = useMemo(() => {
       const c = scene.clone()
       const box = new THREE.Box3().setFromObject(c)
