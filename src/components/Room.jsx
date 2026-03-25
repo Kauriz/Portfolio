@@ -251,7 +251,7 @@ export function Door({ position, rotation, scale }) {
 
       {/* Collider invisible */}
       <mesh visible={false} onUpdate={(mesh) => mesh.layers.enable(1)}>
-        <boxGeometry args={[3, 6.5, 1]} />
+        <boxGeometry args={[scale[0]*150, scale[1]*220, scale[2]*10]} />
         <meshStandardMaterial />
       </mesh>
     </group>
@@ -277,7 +277,7 @@ export function Sofa({ position, rotation, scale }) {
 
       {/* Collider invisible */}
       <mesh visible={false} onUpdate={(mesh) => mesh.layers.enable(1)}>
-        <boxGeometry args={[3.5, 2.5, 1.35]} />
+        <boxGeometry args={[scale[0]*1.6, scale[1]*1.4, scale[2]*0.7]} />
         <meshStandardMaterial />
       </mesh>
     </group>
@@ -302,7 +302,7 @@ export function Dresser({ position, rotation, scale }) {
 
       {/* Collider invisible */}
       <mesh visible={false} >
-        <boxGeometry args={[1.4, 1.5, 1]} />
+        <boxGeometry args={[scale[0]*0.66, scale[1]*1.4, scale[2]*0.48]} />
         <meshStandardMaterial />
       </mesh>
     </group>
@@ -463,7 +463,7 @@ export function RopeBarrier({ position, rotation, scale }) {
     <group position={position} rotation={rotation}>
       <primitive object={clone} scale={scale} />
       <mesh visible={false}>
-        <boxGeometry args={[3, 1.5, 0.5]} />
+        <boxGeometry args={[scale[0]*280, scale[1]*160, scale[2]*45]} />
         <meshStandardMaterial />
       </mesh>
     </group>
@@ -538,7 +538,7 @@ export function Piano({ position, rotation, scale }) {
     <group position={position} rotation={rotation}>
       <primitive object={clone} scale={scale} />
       <mesh visible={false}>
-        <boxGeometry args={[3.8, 3.5, 2.5]} />
+        <boxGeometry args={[scale[0]*0.65, scale[1]*0.54, scale[2]*0.38]} />
         <meshStandardMaterial />
       </mesh>
     </group>
@@ -569,7 +569,7 @@ export function Bookshelf({ position, rotation, scale }) {
     <group position={position} rotation={rotation}>
       <primitive object={clone} scale={scale} />
       <mesh visible={false}>
-        <boxGeometry args={[3.4, 4.5, 1]} />
+        <boxGeometry args={[scale[0]*3.5, scale[1]*4.2, scale[2]*1]} />
         <meshStandardMaterial />
       </mesh>
     </group>
@@ -625,7 +625,7 @@ export function Table({ position, rotation, scale }) {
     <group position={position} rotation={rotation}>
       <primitive object={clone} scale={scale} />
       <mesh visible={false}>
-        <boxGeometry args={[1.7, 2, 2]} />
+        <boxGeometry args={[scale[0]*1.9, scale[1]*0.85, scale[2]]} />
         <meshStandardMaterial />
       </mesh>
     </group>
@@ -656,7 +656,7 @@ export function Chair({ position, rotation, scale }) {
     <group position={position} rotation={rotation}>
       <primitive object={clone} scale={scale} />
       <mesh visible={false}>
-        <boxGeometry args={[1, 2.5, 1.1]} />
+        <boxGeometry args={[scale[0]*4, scale[1]*8, scale[2]*4]} />
         <meshStandardMaterial />
       </mesh>
     </group>
@@ -836,7 +836,7 @@ export function Desk({ position, rotation, scale }) {
     <group position={position} rotation={rotation}>
       <primitive object={clone} scale={scale} />
       <mesh visible={false}>
-        <boxGeometry args={[4.6, 1.8, 2.1]} />
+        <boxGeometry args={[scale[0]*2.3, scale[1]*0.85, scale[2]]} />
         <meshStandardMaterial />
       </mesh>
     </group>
@@ -867,7 +867,7 @@ export function ChalkBoard({ position, rotation, scale }) {
     <group position={position} rotation={rotation}>
       <primitive object={clone} scale={scale} />
       <mesh visible={false}>
-        <boxGeometry args={[4.6, 1.8, 2.1]} />
+        <boxGeometry args={[scale[0]*3.5, scale[1]*11, scale[2]*10]} />
         <meshStandardMaterial />
       </mesh>
     </group>
@@ -898,7 +898,7 @@ export function Easel({ position, rotation, scale }) {
     <group position={position} rotation={rotation}>
       <primitive object={clone} scale={scale} />
       <mesh visible={false}>
-        <boxGeometry args={[4.6, 1.8, 2.1]} />
+        <boxGeometry args={[scale[0]*1, scale[1]*2, scale[2]*1.5]} />
         <meshStandardMaterial />
       </mesh>
     </group>
@@ -958,7 +958,7 @@ export function UnderShelf({ position, rotation, scale }) {
     <group position={position} rotation={rotation}>
       <primitive object={clone} scale={scale} />
       <mesh visible={false}>
-        <boxGeometry args={[4.6, 1.8, 2.1]} />
+        <boxGeometry args={[scale[0]*650, scale[1]*1500, scale[2]*400]} />
         <meshStandardMaterial />
       </mesh>
     </group>
