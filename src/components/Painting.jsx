@@ -4,6 +4,7 @@ import { useTexture } from '@react-three/drei'
 import { useGLTF } from '@react-three/drei'
 import { useMemo } from 'react'
 import * as THREE from 'three'
+import { MeshBasicMaterial } from 'three'
 
 const PAINTING_SIZE = [3, 2]
 
@@ -35,13 +36,17 @@ export function Painting({ position, rotation, image, onNear, onLeave, scale, pl
 
   return (
     <group position={position} rotation={rotation}>
-      {/* Tableau */}
-      <mesh ref={meshRef}>
+      {/* Fond blanc */}
+      <mesh ref={meshRef} scale={[scale[0]*0.18,scale[1]*0.21,scale[2]*0.14]} position={[0, 0, -0.001]}>
         <planeGeometry args={PAINTING_SIZE} />
-        <meshStandardMaterial map={texture} />
+        <meshBasicMaterial color="white" />
       </mesh>
-
-      {/* Cadre — ajuste scale selon ton modèle */}
+      {/* Tableau */}
+      <mesh ref={meshRef} scale={[scale[0]*0.14,scale[0]*0.14,scale[0]*0.14]}>
+        <planeGeometry args={PAINTING_SIZE} />
+        <meshBasicMaterial map={texture} transparent alphaTest={0.1} />
+      </mesh>
+      {/* Cadre */}
       <primitive object={frameClone} scale={scale} position={[0, 0, -0.05]} />
     </group>
   )

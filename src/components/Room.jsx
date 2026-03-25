@@ -2,7 +2,9 @@ import * as THREE from 'three'
 import { useTexture } from '@react-three/drei'
 import { useMemo } from 'react'
 import { useGLTF } from '@react-three/drei'
-
+import { RectAreaLightUniformsLib } from 'three/examples/jsm/lights/RectAreaLightUniformsLib'
+import { useRef } from 'react'
+import { useEffect } from 'react'
 
 useTexture.preload([
   '/textures/wall/wall_diff_1k.png',
@@ -11,11 +13,31 @@ useTexture.preload([
   '/textures/floor/floor_02_diff_1k.png',
   '/textures/floor/floor_02_nor_gl_1k.png',
   '/textures/floor/floor_02_rough_1k.png',
+  '/textures/baseboard/baseboard_diff_1k.png',
+  '/textures/baseboard/baseboard_nor_gl_1k.png',
+  '/textures/baseboard/baseboard_rough_1k.png',
 ])
-
 
 useGLTF.preload('/models/frame/frame.gltf')
 useGLTF.preload('/models/sofa/sofa.gltf')
+useGLTF.preload('/models/door.glb')
+useGLTF.preload('/models/dresser.glb')
+useGLTF.preload('/models/lamp.glb')
+useGLTF.preload('/models/openBook.glb')
+useGLTF.preload('/models/wallLamp.glb')
+useGLTF.preload('/models/pedestal.glb')
+useGLTF.preload('/models/concrete_cat_statue_1k.gltf/concrete_cat_statue_1k.gltf')
+useGLTF.preload('/models/ropeBarrier.glb')
+useGLTF.preload('/models/linkedin.glb')
+useGLTF.preload('/models/mail.glb')
+useGLTF.preload('/models/piano.glb')
+useGLTF.preload('/models/bookshelf.glb')
+useGLTF.preload('/models/sleepingCat.glb')
+useGLTF.preload('/models/table.glb')
+useGLTF.preload('/models/chair.glb')
+useGLTF.preload('/models/chess.glb')
+useGLTF.preload('/models/paintingLamp.glb')
+useGLTF.preload('/models/lightSwitch.glb')
 
 // ─────────────────────────────────────────────
 // Hook utilitaire : clone + configure une texture
@@ -81,7 +103,7 @@ export function Wall({ position, rotation, args }) {
   )
 
   return (
-    <mesh position={position} rotation={rotation} onUpdate={(mesh) => mesh.layers.enable(1)} receiveShadow castShadow>
+    <mesh position={position} rotation={rotation} onUpdate={(mesh) => mesh.layers.enable(1)} receiveShadow>
       <boxGeometry args={[width, height, thickness]} />
       <meshStandardMaterial
         map={colorMap}
@@ -149,19 +171,19 @@ export function WallWithDoor({ position, rotation }) {
   return (
     <group position={position} rotation={rotation}>
       {/* Panneau gauche */}
-      <mesh position={[-8.5, 0, 0]} receiveShadow castShadow onUpdate={(mesh) => mesh.layers.enable(1)}>
+      <mesh position={[-8.5, 0, 0]} receiveShadow onUpdate={(mesh) => mesh.layers.enable(1)}>
         <planeGeometry args={[3, 10]} />
         {sideMat}
       </mesh>
 
       {/* Panneau droit */}
-      <mesh position={[-1.5, 0, 0]} receiveShadow castShadow onUpdate={(mesh) => mesh.layers.enable(1)}>
+      <mesh position={[-1.5, 0, 0]} receiveShadow onUpdate={(mesh) => mesh.layers.enable(1)}>
         <planeGeometry args={[3, 10]} />
         {sideMat}
       </mesh>
 
       {/* Panneau du dessus */}
-      <mesh position={[-5, 2, 0]} receiveShadow castShadow onUpdate={(mesh) => mesh.layers.enable(1)}>
+      <mesh position={[-5, 2, 0]} receiveShadow onUpdate={(mesh) => mesh.layers.enable(1)}>
         <planeGeometry args={[4, 6]} />
         {topMat}
       </mesh>
@@ -193,7 +215,7 @@ export function Plinthe({ position, rotation, length }) {
   roughnessMap.rotation = Math.PI / 2
   roughnessMap.center.set(0.5, 0.5)
   return (
-    <mesh position={position} rotation={rotation} onUpdate={(mesh) => mesh.layers.enable(1)} castShadow>
+    <mesh position={position} rotation={rotation} onUpdate={(mesh) => mesh.layers.enable(1)}>
       <boxGeometry args={[length, 1, 0.05]} />
       <meshStandardMaterial
         map={colorMap}
@@ -304,7 +326,16 @@ export function Lamp({ position, scale, rotation }) {
   }, [scene])
 
   return (
-    <primitive object={clone} scale={scale} position={position} rotation={rotation} />
+    <group position={position} rotation={rotation}>
+      <primitive object={clone} scale={scale} />
+      <pointLight
+        color="#ffb347"
+        intensity={8}
+        distance={6}
+        decay={2}
+        position={[0, 0, 0.5]}
+      />
+    </group>
   )
 }
 
@@ -351,12 +382,11 @@ export function WallLamp({ position, scale, rotation }) {
     <group position={position} rotation={rotation}>
       <primitive object={clone} scale={scale} />
       <pointLight
-        color="#ffb347" 
-        intensity={8} 
-        distance={6} 
+        color="#ffb347"
+        intensity={8}
+        distance={6}
         decay={2}
         position={[0, 0, 0.5]}
-        castShadow
       />
     </group>
   )
@@ -644,6 +674,255 @@ export function Chess({ position, scale, rotation }) {
     c.traverse((child) => {
       if (child.isMesh) {
         child.raycast = () => { }
+      }
+    })
+    return c
+  }, [scene])
+
+  return (
+    <primitive object={clone} scale={scale} position={position} rotation={rotation} />
+  )
+}
+
+RectAreaLightUniformsLib.init()
+export function PaintingLamp({ position, scale, rotation, playerPositionRef }) {
+  const { scene } = useGLTF('/models/paintingLamp.glb')
+  const lightRef = useRef()
+  const pos = useMemo(() => new THREE.Vector3(...position), [position])
+
+  useEffect(() => {
+    const interval = setInterval(() => {
+      if (!lightRef.current || !playerPositionRef?.current) return
+      lightRef.current.visible = playerPositionRef.current.distanceTo(pos) < 4
+    }, 1000) // ← vérifie toutes les 500ms au lieu de 60x/seconde
+    return () => clearInterval(interval)
+  }, [pos])
+
+  const clone = useMemo(() => {
+    const c = scene.clone()
+    const box = new THREE.Box3().setFromObject(c)
+    const center = box.getCenter(new THREE.Vector3())
+    c.children.forEach(child => {
+      child.position.sub(center)
+    })
+    c.traverse((child) => {
+      if (child.isMesh) {
+        child.raycast = () => { }
+      }
+    })
+    return c
+  }, [scene])
+
+  return (
+    <group position={position} rotation={rotation}>
+      <primitive object={clone} scale={scale} />
+      <rectAreaLight
+        ref={lightRef}
+        color="#ffecd0"
+        intensity={3}
+        width={3}
+        height={3}
+        position={[0, -0.5, 0.5]}
+        rotation={[Math.PI / 4, Math.PI, 0]}
+      />
+    </group>
+  )
+}
+
+export function PawPrint({ position, rotation, scale, color }) {
+  return (
+    <group position={position} rotation={rotation} scale={scale}>
+      {/* Bosse gauche du coeur */}
+      <mesh position={[0, 0, -0.1]} rotation={[-Math.PI / 2, 0, 0]} scale={[0.35, 0.4, 1]}>
+        <circleGeometry args={[1, 32]} />
+        <meshStandardMaterial color={color} />
+      </mesh>
+      {/* Orteil gauche */}
+      <mesh position={[-0.5, 0, -0.45]} rotation={[-Math.PI / 2, 0, 0]} scale={[0.15, 0.17, 1]}>
+        <circleGeometry args={[1, 32]} />
+        <meshStandardMaterial color={color} />
+      </mesh>
+
+      {/* Orteil centre gauche */}
+      <mesh position={[-0.18, 0, -0.8]} rotation={[-Math.PI / 2, 0, 0]} scale={[0.17, 0.2, 1]}>
+        <circleGeometry args={[1, 32]} />
+        <meshStandardMaterial color={color} />
+      </mesh>
+
+      {/* Orteil centre droit */}
+      <mesh position={[0.18, 0, -0.8]} rotation={[-Math.PI / 2, 0, 0]} scale={[0.17, 0.2, 1]}>
+        <circleGeometry args={[1, 32]} />
+        <meshStandardMaterial color={color} />
+      </mesh>
+
+      {/* Orteil droit */}
+      <mesh position={[0.5, 0, -0.45]} rotation={[-Math.PI / 2, 0, 0]} scale={[0.15, 0.17, 1]}>
+        <circleGeometry args={[1, 32]} />
+        <meshStandardMaterial color={color} />
+      </mesh>
+    </group>
+  )
+}
+
+export function LightSwitch({ position, rotation, scale }) {
+  const { scene } = useGLTF('/models/lightSwitch.glb')
+
+  const clone = useMemo(() => {
+    const c = scene.clone()
+    const box = new THREE.Box3().setFromObject(c)
+    const center = box.getCenter(new THREE.Vector3())
+
+    c.children.forEach(child => {
+      child.position.sub(center)
+    })
+
+    c.traverse((child) => {
+      if (child.isMesh) {
+        child.raycast = () => { }
+      }
+    })
+    return c
+  }, [scene])
+
+  return (
+    <primitive object={clone} scale={scale} position={position} rotation={rotation} />
+  )
+}
+
+export function Plant1({ position, scale, rotation }) {
+  const { scene } = useGLTF('/models/plant1.glb')
+  const clone = useMemo(() => {
+    const c = scene.clone()
+    const box = new THREE.Box3().setFromObject(c)
+    const center = box.getCenter(new THREE.Vector3())
+    c.children.forEach(child => {
+      child.position.sub(center)
+    })
+    c.traverse((child) => {
+      if (child.isMesh) {
+        child.raycast = () => { }
+      }
+    })
+    return c
+  }, [scene])
+
+  return (
+    <primitive object={clone} scale={scale} position={position} rotation={rotation} />
+  )
+}
+
+export function Desk({ position, rotation, scale }) {
+  const { scene } = useGLTF('/models/desk.glb')
+
+  const clone = useMemo(() => {
+    const c = scene.clone()
+    const box = new THREE.Box3().setFromObject(c)
+    const center = box.getCenter(new THREE.Vector3())
+
+    c.children.forEach(child => {
+      child.position.sub(center)
+    })
+
+    c.traverse((child) => {
+      if (child.isMesh) {
+        child.raycast = () => { }
+      }
+    })
+    return c
+  }, [scene])
+
+  return (
+    <group position={position} rotation={rotation}>
+      <primitive object={clone} scale={scale} />
+      <mesh visible={false}>
+        <boxGeometry args={[4.6, 1.8, 2.1]} />
+        <meshStandardMaterial />
+      </mesh>
+    </group>
+  )
+}
+
+export function ChalkBoard({ position, rotation, scale }) {
+  const { scene } = useGLTF('/models/chalkboard.glb')
+
+  const clone = useMemo(() => {
+    const c = scene.clone()
+    const box = new THREE.Box3().setFromObject(c)
+    const center = box.getCenter(new THREE.Vector3())
+
+    c.children.forEach(child => {
+      child.position.sub(center)
+    })
+
+    c.traverse((child) => {
+      if (child.isMesh) {
+        child.raycast = () => { }
+      }
+    })
+    return c
+  }, [scene])
+
+  return (
+    <group position={position} rotation={rotation}>
+      <primitive object={clone} scale={scale} />
+      <mesh visible={false}>
+        <boxGeometry args={[4.6, 1.8, 2.1]} />
+        <meshStandardMaterial />
+      </mesh>
+    </group>
+  )
+}
+
+export function Easel({ position, rotation, scale }) {
+  const { scene } = useGLTF('/models/easel.glb')
+
+  const clone = useMemo(() => {
+    const c = scene.clone()
+    const box = new THREE.Box3().setFromObject(c)
+    const center = box.getCenter(new THREE.Vector3())
+
+    c.children.forEach(child => {
+      child.position.sub(center)
+    })
+
+    c.traverse((child) => {
+      if (child.isMesh) {
+        child.raycast = () => { }
+      }
+    })
+    return c
+  }, [scene])
+
+  return (
+    <group position={position} rotation={rotation}>
+      <primitive object={clone} scale={scale} />
+      <mesh visible={false}>
+        <boxGeometry args={[4.6, 1.8, 2.1]} />
+        <meshStandardMaterial />
+      </mesh>
+    </group>
+  )
+}
+
+export function Canva({ position, scale, rotation }) {
+  const { scene } = useGLTF('/models/canvas.glb')
+  const clone = useMemo(() => {
+    const c = scene.clone()
+    const box = new THREE.Box3().setFromObject(c)
+    const center = box.getCenter(new THREE.Vector3())
+    c.children.forEach(child => {
+      child.position.sub(center)
+    })
+    c.traverse((child) => {
+      if (child.isMesh) {
+        child.raycast = () => { }
+
+        // 👉 FORCE un matériau plus lumineux
+        child.material = new THREE.MeshStandardMaterial({
+          color: "#ffffff",
+          roughness: 0.7,
+          metalness: 0
+        })
       }
     })
     return c

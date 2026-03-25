@@ -1,10 +1,14 @@
-import { Ground, Wall, WallWithDoor, PaintingFrame, Plinthe, Sofa, WallLamp } from "../Room";
+import { Ground, Wall, WallWithDoor, PaintingFrame, Plinthe, Sofa, WallLamp, PaintingLamp, PawPrint } from "../Room";
 import { Painting } from "../Painting";
 import { useGLTF } from "@react-three/drei";
+import { projects } from "../../data/projects";
 
 useGLTF.preload('/models/pillar.glb')
 
 export function SalleProjet({ onNear, onLeave, playerPositionRef }) {
+    const bluePawprint = "#5591a5"
+    const redPawprint = "#b66745"
+    const greenPawprint = "#7c9a7e"
     return (
         <group>
             <Ground position={[0, 0, -25]} args={[20, 20]} />
@@ -28,54 +32,79 @@ export function SalleProjet({ onNear, onLeave, playerPositionRef }) {
             <WallWithDoor position={[10, 5, -20]} rotation={[0, -Math.PI / 2, 0]} color={"yellow"} />
             <Wall position={[10.25, 5, -17.5]} rotation={[0, -Math.PI / 2, 0]} color={"yellow"} args={[5, 10]} />
             <Wall position={[10.25, 5, -32.5]} rotation={[0, -Math.PI / 2, 0]} color={"yellow"} args={[5, 10]} />
+
             <Painting
-                position={[-5.5, 3, -34.9]}
+                position={projects.projet1.position}
                 rotation={[0, 0, 0]}
-                image="/textures/logoChat.jpeg"
+                image={projects.projet1.image}
                 onNear={() => onNear('projet1')}
                 onLeave={onLeave}
                 scale={[7, 7, 7]}
                 playerPositionRef={playerPositionRef}
             />
+
             <Painting
-                position={[5.5, 3, -34.9]}
+                position={projects.projet2.position}
                 rotation={[0, 0, 0]}
-                image="/textures/logoChat.jpeg"
+                image={projects.projet2.image}
                 onNear={() => onNear('projet2')}
                 onLeave={onLeave}
                 scale={[7, 7, 7]}
                 playerPositionRef={playerPositionRef}
             />
+
             <Painting
-                position={[9.9, 3, -30.5]}
+                position={projects.projet3.position}
                 rotation={[0, -Math.PI / 2, 0]}
-                image="/textures/logoChat.jpeg"
+                image={projects.projet3.image}
                 onNear={() => onNear('projet3')}
                 onLeave={onLeave}
                 scale={[7, 7, 7]}
                 playerPositionRef={playerPositionRef}
             />
+
             <Painting
-                position={[9.9, 3, -19.5]}
+                position={projects.projet4.position}
                 rotation={[0, -Math.PI / 2, 0]}
-                image="/textures/logoChat.jpeg"
+                image={projects.projet4.image}
                 onNear={() => onNear('projet4')}
                 onLeave={onLeave}
                 scale={[7, 7, 7]}
                 playerPositionRef={playerPositionRef}
             />
             <Painting
-                position={[-9.9, 3, -25]}
+                position={projects.projet5.position}
                 rotation={[0, Math.PI / 2, 0]}
-                image="/textures/logoChat.jpeg"
+                image={projects.projet5.image}
                 onNear={() => onNear('projet5')}
                 onLeave={onLeave}
                 scale={[7, 7, 7]}
                 playerPositionRef={playerPositionRef}
             />
-            <Sofa position={[-8.5, 0, -25]} scale={[2.5, 2.5, 2.5]} rotation={[0, Math.PI / 2, 0]} />
+
             <WallLamp position={[-5, 3, -15.18]} rotation={[0, Math.PI, 0]} scale={[1,1,1]} />
             <WallLamp position={[5, 3, -15.18]} rotation={[0, Math.PI, 0]} scale={[1,1,1]} />
+            <PawPrint position={[-3,0.01,-17]} rotation={[0,Math.PI/4,0]} scale={[0.4,0.4,0.4]} color={bluePawprint} />
+            <PawPrint position={[-4,0.01,-19]} rotation={[0,Math.PI/3.5,0]} scale={[0.4,0.4,0.4]} color={bluePawprint} />
+            <PawPrint position={[-6,0.01,-18.5]} rotation={[0,Math.PI/3,0]} scale={[0.4,0.4,0.4]} color={bluePawprint} />
+            <PawPrint position={[-7.5,0.01,-20.5]} rotation={[0,Math.PI/2.25,0]} scale={[0.4,0.4,0.4]} color={bluePawprint} />
+            <PawPrint position={[-1,0.01,-17.5]} rotation={[0,Math.PI/3,0]} scale={[0.4,0.4,0.4]} color={bluePawprint} />
+            <PawPrint position={[3,0.01,-17]} rotation={[0,-Math.PI/6,0]} scale={[0.4,0.4,0.4]} color={redPawprint} />
+            <PawPrint position={[2.5,0.01,-18.8]} rotation={[0,-Math.PI/6.5,0]} scale={[0.4,0.4,0.4]} color={redPawprint} />
+            <PawPrint position={[4.5,0.01,-19.4]} rotation={[0,-Math.PI/5,0]} scale={[0.4,0.4,0.4]} color={redPawprint} />
+            <PawPrint position={[4,0.01,-21.5]} rotation={[0,-Math.PI/5.5,0]} scale={[0.4,0.4,0.4]} color={redPawprint} />
+            <PawPrint position={[6.3,0.01,-21.5]} rotation={[0,-Math.PI/4,0]} scale={[0.4,0.4,0.4]} color={redPawprint} />
+            <PawPrint position={[6.2,0.01,-24.2]} rotation={[0,-Math.PI/4,0]} scale={[0.4,0.4,0.4]} color={redPawprint} />
+            <PawPrint position={[8.5,0.01,-23.4]} rotation={[0,-Math.PI/3,0]} scale={[0.4,0.4,0.4]} color={redPawprint} />
+            <PawPrint position={[9.5,0.01,-26]} rotation={[0,-Math.PI/2.5,0]} scale={[0.4,0.4,0.4]} color={redPawprint} />
+            <PawPrint position={[4,0.01,-24.2]} rotation={[0,Math.PI/4.5,0]} scale={[0.4,0.4,0.4]} color={greenPawprint} />
+            <PawPrint position={[4.2,0.01,-26.8]} rotation={[0,Math.PI/4.5,0]} scale={[0.4,0.4,0.4]} color={greenPawprint} />
+            <PawPrint position={[1.8,0.01,-26.8]} rotation={[0,Math.PI/5,0]} scale={[0.4,0.4,0.4]} color={greenPawprint} />
+            <PawPrint position={[2.5,0.01,-29.2]} rotation={[0,Math.PI/5.5,0]} scale={[0.4,0.4,0.4]} color={greenPawprint} />
+            <PawPrint position={[0.3,0.01,-29.5]} rotation={[0,Math.PI/6.5,0]} scale={[0.4,0.4,0.4]} color={greenPawprint} />
+            <PawPrint position={[1.3,0.01,-31.8]} rotation={[0,Math.PI/16,0]} scale={[0.4,0.4,0.4]} color={greenPawprint} />
+            <PawPrint position={[-0.6,0.01,-32.8]} rotation={[0,Math.PI/20,0]} scale={[0.4,0.4,0.4]} color={greenPawprint} />
+            <PawPrint position={[0.8,0.01,-34.8]} rotation={[0,Math.PI/30,0]} scale={[0.4,0.4,0.4]} color={greenPawprint} />
         </group>
     )
 }

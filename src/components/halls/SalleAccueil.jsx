@@ -1,4 +1,4 @@
-import { Ground, Wall, WallWithDoor, Plinthe, Door, Sofa, Dresser, Lamp, OpenBook, WallLamp } from "../Room"; 
+import { Ground, Wall, WallWithDoor, Plinthe, Door, Sofa, Dresser, Lamp, OpenBook, WallLamp, LightSwitch, Plant1 } from "../Room"; 
 import { useGLTF } from "@react-three/drei";
 import { useMemo } from "react";
 import * as THREE from 'three'
@@ -119,6 +119,7 @@ export function SalleAccueil(){
         <Lamp position={[4.3,2.3,-3.9]} scale={[0.02,0.02,0.02]} rotation={[0,-Math.PI/2,0]} />
         <OpenBook position={[4.2,1.89,-3.2]} scale={[0.02,0.02,0.02]} rotation={[0,0,0]} />
         <WallLamp position={[-3.5,3,-4.82]} scale={[1,1,1]} rotation={[0,0,0]} />
+        <Plant1 position={[-4,4.25,-1]} scale={[1,1,1]} />
     </group>
     )
 }

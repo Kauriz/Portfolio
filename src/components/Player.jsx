@@ -2,6 +2,7 @@ import { useRef, useEffect } from 'react'
 import { useFrame, useThree } from '@react-three/fiber'
 import * as THREE from 'three'
 import { useGLTF, useAnimations } from '@react-three/drei'
+import { projects } from '../data/projects'
 
 export function Player({ openProject, playerPositionRef }) {
   const keys = useRef({ forward: false, backward: false, left: false, right: false, shift: false })
@@ -12,66 +13,75 @@ export function Player({ openProject, playerPositionRef }) {
   const { actions } = useAnimations(animations, playerRef)
   const isMoving = useRef(false)
   const catRef = useRef()
-  const isRunning = useRef(false)
+
+  // ← tous les objets créés une seule fois
+  const raycaster = useRef(new THREE.Raycaster())
+  const camRaycaster = useRef(new THREE.Raycaster())
+  const direction = useRef(new THREE.Vector3())
+  const forward = useRef(new THREE.Vector3())
+  const right = useRef(new THREE.Vector3())
+  const idealCamPos = useRef(new THREE.Vector3())
+  const camDirection = useRef(new THREE.Vector3())
+  const up = useRef(new THREE.Vector3(0, 1, 0))
+  const safePos = useRef(new THREE.Vector3())
+  const frameCount = useRef(0)
 
   useFrame(() => {
     if (!openProject) {
       const speed = keys.current.shift ? 0.10 : 0.05
-      const direction = new THREE.Vector3()
-      const forward = new THREE.Vector3()
-      const right = new THREE.Vector3()
+      direction.current.set(0, 0, 0)
+      camera.getWorldDirection(forward.current)
+      forward.current.y = 0
+      forward.current.normalize()
+      right.current.crossVectors(forward.current, up.current)  // ← plus de new Vector3
 
-      camera.getWorldDirection(forward)
-      forward.y = 0
-      forward.normalize()
+      if (keys.current.forward) direction.current.add(forward.current)
+      if (keys.current.backward) direction.current.sub(forward.current)
+      if (keys.current.left) direction.current.sub(right.current)
+      if (keys.current.right) direction.current.add(right.current)
 
-      right.crossVectors(forward, new THREE.Vector3(0, 1, 0))
-
-      if (keys.current.forward) direction.add(forward)
-      if (keys.current.backward) direction.sub(forward)
-      if (keys.current.left) direction.sub(right)
-      if (keys.current.right) direction.add(right)
-
-      if (direction.length() > 0) {
-        direction.normalize()
-        const raycaster = new THREE.Raycaster()
-        raycaster.set(playerRef.current.position, direction)
-        const intersects = raycaster.intersectObjects(scene.children, true)
+      if (direction.current.length() > 0) {
+        direction.current.normalize()
+        raycaster.current.set(playerRef.current.position, direction.current)
+        const intersects = raycaster.current.intersectObjects(scene.children, true)
         const blocked = intersects.length > 0 && intersects[0].distance < 0.6
         if (!blocked) {
-          playerRef.current.position.addScaledVector(direction, speed)
+          playerRef.current.position.addScaledVector(direction.current, speed)
           if (!keys.current.backward) {
-            playerDir.current.lerp(direction, 0.05)
+            playerDir.current.lerp(direction.current, 0.05)
             playerDir.current.normalize()
           }
         }
       }
 
       // Position idéale de la caméra
-      const idealCamPos = new THREE.Vector3(
+      idealCamPos.current.set(
         playerRef.current.position.x - playerDir.current.x * 5,
         playerRef.current.position.y + 5,
         playerRef.current.position.z - playerDir.current.z * 5
       )
 
-      // Rayon du joueur vers la caméra
-      const camRaycaster = new THREE.Raycaster()
-      camRaycaster.layers.set(1)
-      const camDirection = playerRef.current.position.clone().sub(idealCamPos).normalize()
-      camRaycaster.set(idealCamPos, camDirection)
-      const camIntersects = camRaycaster.intersectObjects(scene.children, true)
+      // Direction caméra → joueur
+      camDirection.current
+        .copy(playerRef.current.position)
+        .sub(idealCamPos.current)
+        .normalize()
+
+      camRaycaster.current.layers.set(1)
+      camRaycaster.current.set(idealCamPos.current, camDirection.current)
+      const camIntersects = camRaycaster.current.intersectObjects(scene.children, true)
 
       if (camIntersects.length > 0 && camIntersects[0].distance < 5) {
-        const safePos = camIntersects[0].point.clone()
-        safePos.addScaledVector(camDirection, 2.5)
-        camera.position.lerp(safePos, 0.05)
+        safePos.current.copy(camIntersects[0].point)  // ← plus de .clone()
+        safePos.current.addScaledVector(camDirection.current, 2.5)
+        camera.position.lerp(safePos.current, 0.05)
       } else {
-        camera.position.lerp(idealCamPos, 0.05)
+        camera.position.lerp(idealCamPos.current, 0.05)
       }
 
       camera.lookAt(playerRef.current.position)
 
-      const moving = direction.length() > 0
+      const moving = direction.current.length() > 0
       const running = moving && keys.current.shift
 
       if (moving && !isMoving.current) {
@@ -92,6 +102,7 @@ export function Player({ openProject, playerPositionRef }) {
           actions['walk']?.play()
         }
       }
+
       if (catRef.current) {
         const angle = Math.atan2(playerDir.current.x, playerDir.current.z)
         catRef.current.rotation.y = angle
@@ -99,6 +110,21 @@ export function Player({ openProject, playerPositionRef }) {
 
       if (playerPositionRef?.current) {
         playerPositionRef.current.copy(playerRef.current.position)
+      }
+
+      // ── Détection tableaux toutes les 12 frames ──
+      frameCount.current++
+      if (frameCount.current % 12 === 0) {
+        let found = null
+        for (const [id, project] of Object.entries(projects)) {
+          const dx = playerRef.current.position.x - project.position[0]
+          const dz = playerRef.current.position.z - project.position[2]
+          if (Math.sqrt(dx * dx + dz * dz) < 4) {
+            found = id
+            break
+          }
+        }
+        onNearPainting?.(found)
       }
     }
   })
@@ -125,7 +151,6 @@ export function Player({ openProject, playerPositionRef }) {
       window.removeEventListener('keyup', onKeyUp)
     }
   }, [])
-
 
   useEffect(() => {
     actions['static']?.play()

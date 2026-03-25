@@ -1,8 +1,10 @@
-import { Ground, Wall, WallWithDoor, Plinthe, CatStatue, Pedestal, RopeBarrier, Linkedin, Mail, Piano, Bookshelf, SleepingCat, Table, Chair, Chess, WallLamp } from "../Room";
+import { Ground, Wall, WallWithDoor, Plinthe, CatStatue, Pedestal, RopeBarrier, Linkedin, Mail, Piano, Bookshelf, SleepingCat, Table, Chair, Chess, WallLamp, Plant1 } from "../Room";
 import { useGLTF } from "@react-three/drei";
 import { useMemo } from "react";
 import * as THREE from 'three'
 import { useRef } from "react";
+import { useState, useEffect } from "react";
+
 
 export function Carpet({ position, scale, rotation }) {
     const { scene } = useGLTF('/models/carpetContact.glb')
@@ -29,6 +31,12 @@ export function Carpet({ position, scale, rotation }) {
 export function SalleContact() {
     const target1 = useRef()
     const target2 = useRef()
+    const [ready, setReady] = useState(false)
+
+    useEffect(() => {
+        setReady(true)
+    }, [])
+
     return (
         <group>
             <Ground position={[-25, 0, -20]} args={[10, 10]} />
@@ -58,7 +66,6 @@ export function SalleContact() {
             <Bookshelf position={[-29.5, 2.09, -31]} scale={[1, 1, 1]} rotation={[0, Math.PI / 2.05, 0]} />
             <Bookshelf position={[-29.5, 2.09, -27.5]} scale={[1, 1, 1]} rotation={[0, Math.PI / 2.05, 0]} />
             <Bookshelf position={[-29.5, 2.09, -24]} scale={[1, 1, 1]} rotation={[0, Math.PI / 2.05, 0]} />
-            <SleepingCat position={[-29, 1, -34]} scale={[3, 3, 3]} rotation={[0, Math.PI / 2.05, 0]} />
             <Table position={[-21, 0.9, -25]} scale={[0.8, 2.4, 1.6]} rotation={[0, 0, 0]} />
             <Chair position={[-21, 1.2, -26.2]} scale={[0.3, 0.3, 0.3]} rotation={[0, 0, 0]} />
             <Chair position={[-21, 1.2, -23.8]} scale={[0.3, 0.3, 0.3]} rotation={[0, Math.PI, 0]} />
@@ -68,24 +75,29 @@ export function SalleContact() {
             <WallLamp position={[-20.22, 3, -25]} rotation={[0, -Math.PI / 2, 0]} scale={[1, 1, 1]} />
             <object3D ref={target1} position={[-29, 1, -16]} />
             <object3D ref={target2} position={[-25, 1, -16]} />
-            <spotLight
-                position={[-29, 7, -17]}
-                target={target1.current}
-                color="#ffddaa"
-                intensity={80}
-                angle={Math.PI / 8}
-                penumbra={0.2}
-                distance={8}
-            />
-            <spotLight
-                position={[-25, 7, -17]}
-                target={target2.current}
-                color="#ffddaa"
-                intensity={80}
-                angle={Math.PI / 8}
-                penumbra={0.2}
-                distance={8}
-            />
+            {ready && (
+                <>
+                    <spotLight
+                        position={[-29, 7, -17]}
+                        target={target1.current}
+                        color="#ffddaa"
+                        intensity={80}
+                        angle={Math.PI / 8}
+                        penumbra={0.2}
+                        distance={8}
+                    />
+                    <spotLight
+                        position={[-25, 7, -17]}
+                        target={target2.current}
+                        color="#ffddaa"
+                        intensity={80}
+                        angle={Math.PI / 8}
+                        penumbra={0.2}
+                        distance={8}
+                    />
+                </>
+            )}
+            <Plant1 position={[-23.8,4.1,-34.5]} scale={[1,1,1]} />
         </group>
     )
 }
