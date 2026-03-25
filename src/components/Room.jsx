@@ -5,6 +5,7 @@ import { useGLTF } from '@react-three/drei'
 import { RectAreaLightUniformsLib } from 'three/examples/jsm/lights/RectAreaLightUniformsLib'
 import { useRef } from 'react'
 import { useEffect } from 'react'
+import { Text } from '@react-three/drei'
 
 useTexture.preload([
   '/textures/wall/wall_diff_1k.png',
@@ -930,5 +931,36 @@ export function Canva({ position, scale, rotation }) {
 
   return (
     <primitive object={clone} scale={scale} position={position} rotation={rotation} />
+  )
+}
+
+export function UnderShelf({ position, rotation, scale }) {
+  const { scene } = useGLTF('/models/underShelf.glb')
+
+  const clone = useMemo(() => {
+    const c = scene.clone()
+    const box = new THREE.Box3().setFromObject(c)
+    const center = box.getCenter(new THREE.Vector3())
+
+    c.children.forEach(child => {
+      child.position.sub(center)
+    })
+
+    c.traverse((child) => {
+      if (child.isMesh) {
+        child.raycast = () => { }
+      }
+    })
+    return c
+  }, [scene])
+
+  return (
+    <group position={position} rotation={rotation}>
+      <primitive object={clone} scale={scale} />
+      <mesh visible={false}>
+        <boxGeometry args={[4.6, 1.8, 2.1]} />
+        <meshStandardMaterial />
+      </mesh>
+    </group>
   )
 }

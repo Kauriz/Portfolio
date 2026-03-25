@@ -1,4 +1,4 @@
-import { Ground, Wall, WallWithDoor, Plinthe, CatStatue, Pedestal, RopeBarrier, Linkedin, Mail, Piano, Bookshelf, SleepingCat, Table, Chair, Chess, WallLamp, Plant1 } from "../Room";
+import { Ground, Wall, WallWithDoor, Plinthe, CatStatue, Pedestal, RopeBarrier, Linkedin, Mail, Piano, Bookshelf, SleepingCat, Table, Chair, Chess, WallLamp, Plant1, UnderShelf } from "../Room";
 import { useGLTF } from "@react-three/drei";
 import { useMemo } from "react";
 import * as THREE from 'three'
@@ -45,7 +45,10 @@ export function SalleContact() {
             <Ground position={[-25, 0, -30]} args={[10, 10]} />
             <Wall position={[-25, 5, -14.75]} rotation={[0, 0, 0]} args={[10, 10]} />
             <Wall position={[-25, 5, -35.25]} rotation={[0, 0, 0]} args={[10, 10]} />
-            <Wall position={[-30.25, 5, -25]} rotation={[0, -Math.PI / 2, 0]} args={[20, 10]} />
+            <Wall position={[-30.25, 5, -28.01]} rotation={[0, -Math.PI / 2, 0]} args={[13.98, 10]} />
+            <Wall position={[-30.25, 5, -16.99]} rotation={[0, -Math.PI / 2, 0]} args={[3.99, 10]} />
+            <Wall position={[-30.25, 0.92, -20]} rotation={[0, -Math.PI / 2, 0]} args={[2.04, 0.65]} />
+            <Wall position={[-30.25, 5.6, -20]} rotation={[0, -Math.PI / 2, 0]} args={[2.04, 2]} />
             <Plinthe position={[-25, 0.1, -15.03]} rotation={[0, 0, 0]} length={10} />
             <Plinthe position={[-25, 0.1, -34.97]} rotation={[0, 0, 0]} length={10} />
             <Plinthe position={[-29.97, 0.1, -20]} rotation={[0, -Math.PI / 2, 0]} length={10} />
@@ -98,6 +101,7 @@ export function SalleContact() {
                 </>
             )}
             <Plant1 position={[-23.8,4.1,-34.5]} scale={[1,1,1]} />
+            <UnderShelf position={[-30.6,3.5,-20]} scale={[0.003,0.003,0.003]} rotation={[0,Math.PI/2, 0]} />
         </group>
     )
 }

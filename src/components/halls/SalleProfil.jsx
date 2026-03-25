@@ -2,7 +2,7 @@ import { Canvas } from "@react-three/fiber";
 import { Ground, Wall, WallWithDoor, Plinthe, Easel, Canva, Lamp, Dresser } from "../Room";
 import { useTexture } from "@react-three/drei"
 
-function ImagePlane({position, rotation, scale, path}) {
+export function ImagePlane({position, rotation, scale, path}) {
   const texture = useTexture(path)
 
   return (
