@@ -4,7 +4,7 @@ import * as THREE from 'three'
 import { useGLTF, useAnimations } from '@react-three/drei'
 import { projects } from '../data/projects'
 
-export function Player({ openProject, playerPositionRef }) {
+export function Player({ openProject, playerPositionRef, onNearPainting }) {
   const keys = useRef({ forward: false, backward: false, left: false, right: false, shift: false })
   const { camera, scene } = useThree()
   const playerRef = useRef()

@@ -52,7 +52,7 @@ export default function App() {
         <Stats />
         <ambientLight color="#ffecd0" intensity={0.2} />
         <directionalLight position={[10, 10, 5]} intensity={1} />
-        <Player openProject={openProject} playerPositionRef={playerPositionRef} />
+        <Player openProject={openProject} playerPositionRef={playerPositionRef} onNearPainting={setNearPainting}/>
         {/* Hall d'accueil */}
         <SalleAccueil />
         {/* Couloir Hall d'accueil */}

@@ -22,18 +22,6 @@ export function Painting({ position, rotation, image, onNear, onLeave, scale, pl
   const playerPos = useMemo(() => new THREE.Vector3(), [])
   const paintingPos = useMemo(() => new THREE.Vector3(...position), position)
 
-  useFrame(() => {
-    const distance = playerPositionRef.current.distanceTo(paintingPos)
-
-    if (distance < 4) {
-      setIsNear(true)
-      onNear?.()
-    } else {
-      if (isNear) onLeave?.()
-      setIsNear(false)
-    }
-  })
-
   return (
     <group position={position} rotation={rotation}>
       {/* Fond blanc */}
