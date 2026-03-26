@@ -21,12 +21,29 @@ export default function App() {
   const [openProject, setOpenProject] = useState(null)
   const playerPositionRef = useRef(new THREE.Vector3())
   const { progress } = useProgress()
-
+  const project = openProject ? projects[openProject] : null
   const [loading, setLoading] = useState(true)
   const [canvasReady, setCanvasReady] = useState(false)
   const [loaderFading, setLoaderFading] = useState(false)
   const [showCanvas, setShowCanvas] = useState(false)
+  const keyStyle = {
+    width: '40px',
+    height: '40px',
+    background: 'rgba(255,255,255,0.1)',
+    border: '1px solid rgba(255,255,255,0.3)',
+    borderRadius: '6px',
+    display: 'flex',
+    alignItems: 'center',
+    justifyContent: 'center',
+    fontSize: '0.9rem',
+    fontWeight: 'bold',
+  }
 
+  useEffect(() => {
+    if (showCanvas) {
+      setOpenProject('projet12')
+    }
+  }, [showCanvas])
   useEffect(() => {
     if (progress === 100 && canvasReady) {
       // 1. Loader commence à fader
@@ -83,7 +100,7 @@ export default function App() {
           <AdaptiveDpr pixelated />
         </PerformanceMonitor>
         <Stats />
-        <ambientLight color="#ffecd0" intensity={0.2} />
+        <ambientLight color="#ffecd0" intensity={0.3} />
         <directionalLight position={[10, 10, 5]} intensity={1} />
         <Player openProject={openProject} playerPositionRef={playerPositionRef} onNearPainting={setNearPainting} />
         <SalleAccueil />
@@ -132,9 +149,9 @@ export default function App() {
       {openProject && (
         <div style={{
           position: 'fixed',
-          bottom: '10%',
+          top: '45%',
           left: '50%',
-          transform: 'translateX(-50%)',
+          transform: 'translate(-50%, -50%)',
           width: '40%',
           maxHeight: '85vh',
           overflowY: 'auto',
@@ -144,19 +161,130 @@ export default function App() {
           borderRadius: '8px',
           fontSize: '0.9rem'
         }}>
-          {Object.entries(projects[openProject]).map(([key, value]) => (
-            <div key={key} style={{ marginBottom: '1rem' }}>
-              <strong style={{ textTransform: 'capitalize' }}>
-                {key}
-              </strong>
-              <div style={{ marginTop: '0.3rem', whiteSpace: 'pre-line' }}>
-                {Array.isArray(value) ? value.join(', ') : value}
+          <div style={{ marginBottom: '1rem' }}>
+            {project.title && (
+              <>
+                <strong style={{ textTransform: 'capitalize', fontSize: "2rem" }}>
+                  {project.title}
+                </strong>
+                <br></br>
+                <br></br>
+                <div style={{ marginTop: '0.3rem', whiteSpace: 'pre-line' }}>
+                  {project.shortDescription}
+                </div>
+                <br></br>
+              </>
+            )}
+
+            {project.objectives && (
+              <>
+                <strong style={{ textTransform: 'capitalize', fontSize: "1.2rem" }}>
+                  Objectifs
+                </strong>
+                <div style={{ marginTop: '0.3rem', whiteSpace: 'pre-line' }}>
+                  {project.objectives}
+                </div>
+                <br></br>
+              </>
+            )}
+
+            {project.description && (
+              <>
+                <strong style={{ textTransform: 'capitalize', fontSize: "1.2rem" }}>
+                  Description
+                </strong>
+                <div style={{ marginTop: '0.3rem', whiteSpace: 'pre-line' }}>
+                  {project.description}
+                </div>
+                <br></br>
+              </>
+            )}
+
+            {project.tools && (
+              <>
+                <strong style={{ textTransform: 'capitalize', fontSize: "1.2rem" }}>
+                  Outils
+                </strong>
+                <div style={{ marginTop: '0.3rem', whiteSpace: 'pre-line' }}>
+                  {project.tools}
+                </div>
+                <br></br>
+              </>
+            )}
+
+            {project.perspectives && (
+              <>
+                <strong style={{ textTransform: 'capitalize', fontSize: '1.2rem' }}>
+                  Perspective
+                </strong>
+                <div style={{ marginTop: '0.3rem', whiteSpace: 'pre-line' }}>
+                  {project.perspectives}
+                </div>
+                <br></br>
+              </>
+            )}
+
+            {project.conclusion && (
+              <>
+                <strong style={{ textTransform: 'capitalize', fontSize: "1.2rem" }}>
+                  Conclusion
+                </strong>
+                <div style={{ marginTop: '0.3rem', whiteSpace: 'pre-line' }}>
+                  {project.conclusion}
+                </div>
+                <br></br>
+              </>
+            )}
+
+            {project.mail && (
+              <>
+                <div style={{ marginTop: '0.3rem', whiteSpace: 'pre-line' }}>
+                  {project.mail}
+                </div>
+                <br></br>
+              </>
+            )}
+            {Array.isArray(project.tuto) && (
+              <div style={{ display: 'flex', alignItems: 'center', justifyContent: "center", gap: "15rem" }}>
+
+                {/* Croix directionnelle */}
+                <div style={{ display: 'grid', gridTemplateColumns: '40px 40px 40px', gridTemplateRows: '40px 40px 40px', gap: '4px' }}>
+                  {/* Haut */}
+                  <div />
+                  <div style={keyStyle}>Z</div>
+                  <div />
+                  {/* Milieu */}
+                  <div style={keyStyle}>Q</div>
+                  <div style={{ ...keyStyle, opacity: 0.2 }}>·</div>
+                  <div style={keyStyle}>D</div>
+                  {/* Bas */}
+                  <div />
+                  <div style={keyStyle}>S</div>
+                  <div />
+                </div>
+
+                {/* Shift + E */}
+                <div style={{ display: 'flex', gap: '1rem', flexDirection: "column" }}>
+                  <div style={{ display: 'flex', alignItems: 'center', gap: '0.5rem' }}>
+                    <div style={{ ...keyStyle, width: '80px' }}>Shift</div>
+                    <span style={{ opacity: 0.6, fontSize: '0.8rem' }}>Sprinter</span>
+                  </div>
+                  <div style={{ display: 'flex', alignItems: 'center', gap: '0.5rem' }}>
+                    <div style={keyStyle}>E</div>
+                    <span style={{ opacity: 0.6, fontSize: '0.8rem' }}>Interagir</span>
+                  </div>
+                </div>
+
               </div>
-            </div>
-          ))}
-          <button onClick={() => setOpenProject(null)}>
-            Fermer
-          </button>
+            
+            )}
+          </div>
+
+          {project.title && (
+            <button onClick={() => setOpenProject(null)}>
+              Fermer
+            </button>
+          )}
         </div>
       )}
     </>

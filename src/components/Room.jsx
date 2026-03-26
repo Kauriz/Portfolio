@@ -936,19 +936,24 @@ export function Canva({ position, scale, rotation }) {
 
 export function UnderShelf({ position, rotation, scale }) {
   const { scene } = useGLTF('/models/underShelf.glb')
+  const colliderRef = useRef()
+
+  useEffect(() => {
+    if (colliderRef.current) {
+      colliderRef.current.layers.enable(1)
+    }
+  }, [])
 
   const clone = useMemo(() => {
     const c = scene.clone()
     const box = new THREE.Box3().setFromObject(c)
     const center = box.getCenter(new THREE.Vector3())
-
     c.children.forEach(child => {
       child.position.sub(center)
     })
-
     c.traverse((child) => {
       if (child.isMesh) {
-        child.raycast = () => { }
+        child.raycast = () => {}
       }
     })
     return c
@@ -957,7 +962,7 @@ export function UnderShelf({ position, rotation, scale }) {
   return (
     <group position={position} rotation={rotation}>
       <primitive object={clone} scale={scale} />
-      <mesh visible={false}>
+      <mesh ref={colliderRef} visible={false}>
         <boxGeometry args={[scale[0]*650, scale[1]*1500, scale[2]*400]} />
         <meshStandardMaterial />
       </mesh>

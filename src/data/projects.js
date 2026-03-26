@@ -207,17 +207,17 @@ export const projects = {
   `,
 
     tools: `
-Technologies utilisées :
-- PHP
-- HTML
-- CSS
-- JavaScript
-- Smarty
+      Technologies utilisées :
+      - PHP
+      - HTML
+      - CSS
+      - JavaScript
+      - Smarty
 
-Approche :
-- Utilisation de Smarty pour structurer les vues
-- Aucun CMS utilisé
-- Architecture modulaire inspirée d’un projet de migration PrestaShop
+      Approche :
+      - Utilisation de Smarty pour structurer les vues
+      - Aucun CMS utilisé
+      - Architecture modulaire inspirée d’un projet de migration PrestaShop
   `,
 
     perspectives: `
@@ -240,9 +240,66 @@ Approche :
 
   projet5: {
     title: 'Code Life',
-    description: "C'est une implémentation de Smile Life",
+    shortDescription: `
+    CodeLife est un jeu de société numérique inspiré du jeu "Smile Life". Construisez 
+    votre carrière, fondez une famille, achetez des biens et gérez les aléas de la vie 
+    professionnelle tout en accumulant des smiles pour gagner la partie !`,
+
     position: [-9.9, 3, -25],
     image: "/textures/logoCodeLife.png",
+
+    objectives: `
+    Ce projet est issue d'une initiative scolaire. Il avait pour objectif de déveloper notre capacité 
+    à travailler en équipe et apprendre à developper une application web en utilisant l'architecture
+    JEE (SpringBoot)
+    `,
+
+    description: `
+      Système multijoueur de 2 à 6 joueurs avec 11 types de cartes (Enfant, Mariage, 
+      Flirt, Salaire, Études, Métier, Malus, Spécial, Médaille, Acquisition, Animal). Les règles 
+      s'appuient sur l'état civil, le métier et les études de chaque joueur. Certaines cartes confèrent 
+      des immunités (maladie, accident, divorce) ou des pouvoirs permanents (flirts illimités, voyages 
+      gratuits), tandis que les cartes Malus peuvent être ciblées sur les adversaires.
+
+      Les joueurs peuvent sauvegarder et quitter une partie en cours, la reprendre plus tard ou 
+      l'abandonner. Un historique des parties est disponible par utilisateur. La fin de partie est 
+      détectée automatiquement à la pioche vide, avec calcul du gagnant et classement final.
+
+      L'interface est construite avec Bootstrap 5, avec des notifications visuelles de succès et d'erreur.`,
+
+    tools:`
+      Backend
+
+          Java 21 - Langage de programmation
+          Spring Boot 3.5.8 - Framework principal
+          Spring Data JPA - Gestion de la persistance avec Hibernate
+          H2 Database - Base de données embarquée
+
+      Frontend
+
+          HTML5 - Structure des pages
+          CSS3 - Styles personnalisés
+          Bootstrap 5.3.3 - Framework CSS responsive
+          JavaScript - Interactions dynamiques
+          Thymeleaf - Moteur de templates côté serveur
+
+      Outils
+
+          Maven - Gestion des dépendances
+          Git - Versioning du code
+    `,
+
+    perspectives: `
+    Nous aimerions permettre aux joueurs de s'affronter en ligne depuis plusieurs appareils, et 
+    implémenter l'intégralité des cartes du jeu de société original.
+    `,
+
+    conclusion: `
+    CodeLife a été une expérience enrichissante, autant sur le plan technique qu'humain. En 
+    reproduisant un jeu de société complet avec ses règles complexes, nous avons appris à 
+    structurer une application web robuste en équipe, à l'aide de Spring Boot et Thymeleaf. 
+    Ce projet nous a donné une solide base en architecture JEE et en gestion de projet collaboratif.
+    `
   },
 
   projet6: {
@@ -389,5 +446,36 @@ Approche :
     transmettre avec bienveillance. Elle a renforcé ma conviction que l'apprentissage passe
     avant tout par la compréhension, la confiance, la collaboration et la coopération.
   `
+  },
+  projet8: {
+    title: 'Mail',
+    mail: "axel.lebel2004@gmail.com",
+    position: [-25, 7, -16],
+  },
+  projet9: {
+    title: 'Linkedin',
+    description: "linkedin.com/in/axel-lebel",
+    position: [-29, 7, -16],
+  },
+  projet10: {
+    title: 'Echec',
+    description: "Coming soon",
+    position: [-21, 3, -25],
+  },
+  projet11: {
+    title: 'Musique',
+    description: "Coming soon",
+    position: [-25, 3, -34],
+  },
+  projet12: {
+    tuto: [
+      { key: "Z", direction: "up" },
+      { key: "Q", direction: "left" },
+      { key: "S", direction: "down" },
+      { key: "D", direction: "right" },
+      { key: "Shift", direction: "sprint" },
+      { key: "E", direction: "interact" },
+    ],
+    position: [0, 3, 0],
   }
 }
