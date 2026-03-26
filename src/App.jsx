@@ -99,7 +99,6 @@ export default function App() {
         >
           <AdaptiveDpr pixelated />
         </PerformanceMonitor>
-        <Stats />
         <ambientLight color="#ffecd0" intensity={0.3} />
         <directionalLight position={[10, 10, 5]} intensity={1} />
         <Player openProject={openProject} playerPositionRef={playerPositionRef} onNearPainting={setNearPainting} />
