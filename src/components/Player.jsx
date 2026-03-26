@@ -9,7 +9,7 @@ export function Player({ openProject, playerPositionRef, onNearPainting }) {
   const { camera, scene } = useThree()
   const playerRef = useRef()
   const playerDir = useRef(new THREE.Vector3(0, 0, -1))
-  const { scene: catscene, animations } = useGLTF('./models/cat/cat.glb')
+  const { scene: catscene, animations } = useGLTF('${import.meta.env.BASE_URL}models/cat/cat.glb')
   const { actions } = useAnimations(animations, playerRef)
   const isMoving = useRef(false)
   const catRef = useRef()

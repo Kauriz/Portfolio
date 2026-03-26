@@ -6,7 +6,7 @@ export const projects = {
       "Application web de gestion de tâches permettant d’organiser, suivre et centraliser des projets.",
 
     position: [-5.5, 3, -34.9],
-    image: "./textures/logoEChat.png",
+    image: "${import.meta.env.BASE_URL}textures/logoEChat.png",
 
     objectives: `
       L'idée de ce projet m'est venue face à un constat simple: aucune application de gestion de
@@ -77,7 +77,7 @@ export const projects = {
       "Application Java permettant de prendre des notes et de générer des comptes rendus de réunion structurés.",
 
     position: [5.5, 3, -34.9],
-    image: "./textures/logoMeowting.png",
+    image: "${import.meta.env.BASE_URL}textures/logoMeowting.png",
 
     objectives: `
       Ce projet est né car je suis devenu le secrétaire du BDA (Bureau des Arts) lors de l'année
@@ -135,7 +135,7 @@ export const projects = {
       "Application en C utilisant SDL permettant de créer une interface graphique interactive et dynamique.",
 
     position: [9.9, 3, -30.5],
-    image: "./textures/logoFélinterface.png",
+    image: "${import.meta.env.BASE_URL}textures/logoFélinterface.png",
 
     objectives: `
       Ce projet avait pour objectif principal la découverte de la bibliothèque SDL, dans le but
@@ -184,7 +184,7 @@ export const projects = {
       "Site personnel interactif permettant de présenter mes projets sous forme de musée 3D.",
 
     position: [9.9, 3, -19.5],
-    image: "./textures/logoPortfolio.png",
+    image: "${import.meta.env.BASE_URL}textures/logoPortfolio.png",
 
     objectives: `
       Ce site a pour ambition de présenter mes projets de façon claire et interactive, tout en me
@@ -246,7 +246,7 @@ export const projects = {
     professionnelle tout en accumulant des smiles pour gagner la partie !`,
 
     position: [-9.9, 3, -25],
-    image: "./textures/logoCodeLife.png",
+    image: "${import.meta.env.BASE_URL}textures/logoCodeLife.png",
 
     objectives: `
     Ce projet est issue d'une initiative scolaire. Il avait pour objectif de déveloper notre capacité 
@@ -309,7 +309,7 @@ export const projects = {
       "Stage en entreprise axé sur le développement web, la maintenance applicative et la migration d’un site e-commerce.",
 
     position: [-4.95, 3, -48.5],
-    image: "./textures/logoStage.png",
+    image: "${import.meta.env.BASE_URL}textures/logoStage.png",
 
     objectives: `
     Lors de ma première année à CY Tech, j'ai effectué un stage d'informatique au sein
@@ -375,7 +375,7 @@ export const projects = {
       "Expérience d’accompagnement d’élèves visant à renforcer leurs compétences en mathématiques et en physique.",
 
     position: [4.95, 3, -51.5],
-    image: "./textures/logoTutorat.png",
+    image: "${import.meta.env.BASE_URL}textures/logoTutorat.png",
 
     objectives: `
     CYTech propose une entraide mutuelle au sein de l'école, telle que le tutorat. C'est avec
