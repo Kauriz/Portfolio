@@ -38,10 +38,10 @@ export function SalleProfil() {
             <Canva position={[29.99,3.5,-22.5]} scale={[0.01,0.01,0.01]} rotation={[0,0,0]} />
             <Dresser position={[29.3,0.1,-21]} scale={[2.5,2.5,2.5]} rotation={[0,-Math.PI/2,0]} />
             <Lamp position={[29.5,2.3,-20.5]} scale={[0.02,0.02,0.02]} rotation={[0,-Math.PI/2,0]} />
-            <ImagePlane path={"${import.meta.env.BASE_URL}textures/mountain.png"} position={[28.3,2.3,-28.64]} scale={[1,1,1]} rotation={[-Math.PI/11,-Math.PI/4.3,-Math.PI/15]} />
-            <ImagePlane path={"${import.meta.env.BASE_URL}textures/hoodie.png"} position={[25.03,3.5,-29.96]} scale={[0.6,0.6,0.6]} rotation={[0,0,0]} />
-            <ImagePlane path={"${import.meta.env.BASE_URL}textures/chess.png"} position={[22.03,2,-29.96]} scale={[0.6,0.6,0.6]} rotation={[0,0,0]} />
-            <ImagePlane path={"${import.meta.env.BASE_URL}textures/music.png"} position={[24,2,-20.04]} scale={[0.65,0.5,0.5]} rotation={[0,Math.PI,0]} />
+            <ImagePlane path={`${import.meta.env.BASE_URL}textures/mountain.png`} position={[28.3,2.3,-28.64]} scale={[1,1,1]} rotation={[-Math.PI/11,-Math.PI/4.3,-Math.PI/15]} />
+            <ImagePlane path={`${import.meta.env.BASE_URL}textures/hoodie.png`} position={[25.03,3.5,-29.96]} scale={[0.6,0.6,0.6]} rotation={[0,0,0]} />
+            <ImagePlane path={`${import.meta.env.BASE_URL}textures/chess.png`} position={[22.03,2,-29.96]} scale={[0.6,0.6,0.6]} rotation={[0,0,0]} />
+            <ImagePlane path={`${import.meta.env.BASE_URL}textures/music.png`} position={[24,2,-20.04]} scale={[0.65,0.5,0.5]} rotation={[0,Math.PI,0]} />
         </group>
     )
 }
