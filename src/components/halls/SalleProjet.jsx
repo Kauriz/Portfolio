@@ -4,7 +4,7 @@ import { useGLTF } from "@react-three/drei";
 import { projects } from "../../data/projects";
 import { ImagePlane } from "../halls/SalleProfil" 
 
-useGLTF.preload('${import.meta.env.BASE_URL}models/pillar.glb')
+useGLTF.preload(`${import.meta.env.BASE_URL}models/pillar.glb`)
 
 export function SalleProjet({ onNear, onLeave, playerPositionRef }) {
     const bluePawprint = "#5591a5"

@@ -4,7 +4,7 @@ import { useMemo } from "react";
 import * as THREE from 'three'
 
 export function CoatRack({ position, scale, rotation }) {
-  const { scene } = useGLTF('${import.meta.env.BASE_URL}models/coatRack.glb')
+  const { scene } = useGLTF(`${import.meta.env.BASE_URL}models/coatRack.glb`)
   const clone = useMemo(() => {
       const c = scene.clone()
       const box = new THREE.Box3().setFromObject(c)
@@ -26,7 +26,7 @@ export function CoatRack({ position, scale, rotation }) {
 }
 
 export function Doormat({ position, scale, rotation }) {
-  const { scene } = useGLTF('${import.meta.env.BASE_URL}models/doormat.glb')
+  const { scene } = useGLTF(`${import.meta.env.BASE_URL}models/doormat.glb`)
   const clone = useMemo(() => {
       const c = scene.clone()
       const box = new THREE.Box3().setFromObject(c)
@@ -48,7 +48,7 @@ export function Doormat({ position, scale, rotation }) {
 }
 
 export function Shoes1({ position, scale, rotation }) {
-  const { scene } = useGLTF('${import.meta.env.BASE_URL}models/shoes1.glb')
+  const { scene } = useGLTF(`${import.meta.env.BASE_URL}models/shoes1.glb`)
   const clone = useMemo(() => {
       const c = scene.clone()
       const box = new THREE.Box3().setFromObject(c)
@@ -70,7 +70,7 @@ export function Shoes1({ position, scale, rotation }) {
 }
 
 export function Carpet({ position, scale, rotation }) {
-  const { scene } = useGLTF('${import.meta.env.BASE_URL}models/carpetAccueil.glb')
+  const { scene } = useGLTF(`${import.meta.env.BASE_URL}models/carpetAccueil.glb`)
   const clone = useMemo(() => {
       const c = scene.clone()
       const box = new THREE.Box3().setFromObject(c)
