@@ -5,9 +5,10 @@ import * as THREE from 'three'
 import { useRef } from "react";
 import { useState, useEffect } from "react";
 
+const BASE = import.meta.env.BASE_URL
 
 export function Carpet({ position, scale, rotation }) {
-    const { scene } = useGLTF(import.meta.env.BASE_URL + 'models/carpetContact.glb')
+    const { scene } = useGLTF(BASE + 'models/carpetContact.glb')
     const clone = useMemo(() => {
         const c = scene.clone()
         const box = new THREE.Box3().setFromObject(c)

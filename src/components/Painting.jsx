@@ -7,6 +7,7 @@ import * as THREE from 'three'
 import { MeshBasicMaterial } from 'three'
 
 const PAINTING_SIZE = [3, 2]
+const BASE = import.meta.env.BASE_URL
 
 export function Painting({ position, rotation, image, onNear, onLeave, scale, playerPositionRef }) {
   const texture = useTexture(image)
@@ -15,7 +16,7 @@ export function Painting({ position, rotation, image, onNear, onLeave, scale, pl
   const [isNear, setIsNear] = useState(false)
 
   // Frame
-  const { scene } = useGLTF(import.meta.env.BASE_URL + 'models/frame/frame.gltf')
+  const { scene } = useGLTF(BASE + 'models/frame/frame.gltf')
   const frameClone = useMemo(() => scene.clone(), [scene])
 
   // Vecteurs hors du useFrame pour éviter les fuites mémoire
@@ -40,4 +41,4 @@ export function Painting({ position, rotation, image, onNear, onLeave, scale, pl
   )
 }
 
-useGLTF.preload(import.meta.env.BASE_URL + 'models/frame/frame.gltf')
+useGLTF.preload(BASE + 'models/frame/frame.gltf')
