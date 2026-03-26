@@ -8,15 +8,15 @@ import { useEffect } from 'react'
 import { Text } from '@react-three/drei'
 
 useTexture.preload([
-  '/textures/wall/wall_diff_1k.png',
-  '/textures/wall/wall_nor_gl_1k.png',
-  '/textures/wall/wall_rough_1k.png',
-  '/textures/floor/floor_02_diff_1k.png',
-  '/textures/floor/floor_02_nor_gl_1k.png',
-  '/textures/floor/floor_02_rough_1k.png',
-  '/textures/baseboard/baseboard_diff_1k.png',
-  '/textures/baseboard/baseboard_nor_gl_1k.png',
-  '/textures/baseboard/baseboard_rough_1k.png',
+  './textures/wall/wall_diff_1k.png',
+  './textures/wall/wall_nor_gl_1k.png',
+  './textures/wall/wall_rough_1k.png',
+  './textures/floor/floor_02_diff_1k.png',
+  './textures/floor/floor_02_nor_gl_1k.png',
+  './textures/floor/floor_02_rough_1k.png',
+  './textures/baseboard/baseboard_diff_1k.png',
+  './textures/baseboard/baseboard_nor_gl_1k.png',
+  './textures/baseboard/baseboard_rough_1k.png',
 ])
 
 useGLTF.preload('./models/frame/frame.gltf')
@@ -66,9 +66,9 @@ export function Ground({ position, args }) {
 
   const [colorMap, normalMap, roughnessMap] = useClonedTextures(
     [
-      '/textures/floor/floor_02_diff_1k.png',
-      '/textures/floor/floor_02_nor_gl_1k.png',
-      '/textures/floor/floor_02_rough_1k.png',
+      './textures/floor/floor_02_diff_1k.png',
+      './textures/floor/floor_02_nor_gl_1k.png',
+      './textures/floor/floor_02_rough_1k.png',
     ],
     width / plankSize,
     height / plankSize
@@ -95,9 +95,9 @@ export function Wall({ position, rotation, args }) {
 
   const [colorMap, normalMap, roughnessMap] = useClonedTextures(
     [
-      '/textures/wall/wall_diff_1k.png',
-      '/textures/wall/wall_nor_gl_1k.png',
-      '/textures/wall/wall_rough_1k.png',
+      './textures/wall/wall_diff_1k.png',
+      './textures/wall/wall_nor_gl_1k.png',
+      './textures/wall/wall_rough_1k.png',
     ],
     width / plankSize,
     height / plankSize
@@ -126,9 +126,9 @@ export function WallWithDoor({ position, rotation }) {
   // Panneau latéral : 3 × 10
   const [sideColor, sideNormal, sideRoughness] = useClonedTextures(
     [
-      '/textures/wall/wall_diff_1k.png',
-      '/textures/wall/wall_nor_gl_1k.png',
-      '/textures/wall/wall_rough_1k.png',
+      './textures/wall/wall_diff_1k.png',
+      './textures/wall/wall_nor_gl_1k.png',
+      './textures/wall/wall_rough_1k.png',
     ],
     3 / plankSize,
     10 / plankSize
@@ -137,9 +137,9 @@ export function WallWithDoor({ position, rotation }) {
   // Panneau du dessus : 4 × 6
   const [topColor, topNormal, topRoughness] = useClonedTextures(
     [
-      '/textures/wall/wall_diff_1k.png',
-      '/textures/wall/wall_nor_gl_1k.png',
-      '/textures/wall/wall_rough_1k.png',
+      './textures/wall/wall_diff_1k.png',
+      './textures/wall/wall_nor_gl_1k.png',
+      './textures/wall/wall_rough_1k.png',
     ],
     4 / plankSize,
     6 / plankSize
@@ -202,9 +202,9 @@ export function PaintingFrame({ position, rotation, scale }) {
 export function Plinthe({ position, rotation, length }) {
   const [colorMap, normalMap, roughnessMap] = useClonedTextures(
     [
-      '/textures/baseboard/baseboard_diff_1k.png',
-      '/textures/baseboard/baseboard_nor_gl_1k.png',
-      '/textures/baseboard/baseboard_rough_1k.png',
+      './textures/baseboard/baseboard_diff_1k.png',
+      './textures/baseboard/baseboard_nor_gl_1k.png',
+      './textures/baseboard/baseboard_rough_1k.png',
     ],
     0.5,
     3,
@@ -396,9 +396,9 @@ export function WallLamp({ position, scale, rotation }) {
 export function Pedestal({ position, scale }) {
   const { scene } = useGLTF('./models/pedestal.glb')
   const [colorMap, normalMap, roughnessMap] = useTexture([
-    '/textures/baseboard/baseboard_diff_1k.png',
-    '/textures/baseboard/baseboard_nor_gl_1k.png',
-    '/textures/baseboard/baseboard_rough_1k.png',
+    './textures/baseboard/baseboard_diff_1k.png',
+    './textures/baseboard/baseboard_nor_gl_1k.png',
+    './textures/baseboard/baseboard_rough_1k.png',
   ])
   const clone = useMemo(() => {
     const c = scene.clone()
