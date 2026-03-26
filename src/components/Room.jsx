@@ -19,26 +19,26 @@ useTexture.preload([
   '/textures/baseboard/baseboard_rough_1k.png',
 ])
 
-useGLTF.preload('/models/frame/frame.gltf')
-useGLTF.preload('/models/sofa/sofa.gltf')
-useGLTF.preload('/models/door.glb')
-useGLTF.preload('/models/dresser.glb')
-useGLTF.preload('/models/lamp.glb')
-useGLTF.preload('/models/openBook.glb')
-useGLTF.preload('/models/wallLamp.glb')
-useGLTF.preload('/models/pedestal.glb')
-useGLTF.preload('/models/concrete_cat_statue_1k.gltf/concrete_cat_statue_1k.gltf')
-useGLTF.preload('/models/ropeBarrier.glb')
-useGLTF.preload('/models/linkedin.glb')
-useGLTF.preload('/models/mail.glb')
-useGLTF.preload('/models/piano.glb')
-useGLTF.preload('/models/bookshelf.glb')
-useGLTF.preload('/models/sleepingCat.glb')
-useGLTF.preload('/models/table.glb')
-useGLTF.preload('/models/chair.glb')
-useGLTF.preload('/models/chess.glb')
-useGLTF.preload('/models/paintingLamp.glb')
-useGLTF.preload('/models/lightSwitch.glb')
+useGLTF.preload('./models/frame/frame.gltf')
+useGLTF.preload('./models/sofa/sofa.gltf')
+useGLTF.preload('./models/door.glb')
+useGLTF.preload('./models/dresser.glb')
+useGLTF.preload('./models/lamp.glb')
+useGLTF.preload('./models/openBook.glb')
+useGLTF.preload('./models/wallLamp.glb')
+useGLTF.preload('./models/pedestal.glb')
+useGLTF.preload('./models/concrete_cat_statue_1k.gltf/concrete_cat_statue_1k.gltf')
+useGLTF.preload('./models/ropeBarrier.glb')
+useGLTF.preload('./models/linkedin.glb')
+useGLTF.preload('./models/mail.glb')
+useGLTF.preload('./models/piano.glb')
+useGLTF.preload('./models/bookshelf.glb')
+useGLTF.preload('./models/sleepingCat.glb')
+useGLTF.preload('./models/table.glb')
+useGLTF.preload('./models/chair.glb')
+useGLTF.preload('./models/chess.glb')
+useGLTF.preload('./models/paintingLamp.glb')
+useGLTF.preload('./models/lightSwitch.glb')
 
 // ─────────────────────────────────────────────
 // Hook utilitaire : clone + configure une texture
@@ -193,7 +193,7 @@ export function WallWithDoor({ position, rotation }) {
 }
 
 export function PaintingFrame({ position, rotation, scale }) {
-  const { scene } = useGLTF('/models/frame/frame.gltf')
+  const { scene } = useGLTF('./models/frame/frame.gltf')
   const clone = useMemo(() => scene.clone(), [scene])
 
   return <primitive object={clone} position={position} rotation={rotation} scale={scale} />
@@ -229,7 +229,7 @@ export function Plinthe({ position, rotation, length }) {
 }
 
 export function Door({ position, rotation, scale }) {
-  const { scene } = useGLTF('/models/door.glb')
+  const { scene } = useGLTF('./models/door.glb')
   const clone = useMemo(() => {
     const c = scene.clone()
     const box = new THREE.Box3().setFromObject(c)
@@ -259,7 +259,7 @@ export function Door({ position, rotation, scale }) {
 }
 
 export function Sofa({ position, rotation, scale }) {
-  const { scene } = useGLTF('/models/sofa/sofa.gltf')
+  const { scene } = useGLTF('./models/sofa/sofa.gltf')
   const clone = useMemo(() => {
     const c = scene.clone()
     c.traverse((child) => {
@@ -285,7 +285,7 @@ export function Sofa({ position, rotation, scale }) {
 }
 
 export function Dresser({ position, rotation, scale }) {
-  const { scene } = useGLTF('/models/dresser.glb')
+  const { scene } = useGLTF('./models/dresser.glb')
   const clone = useMemo(() => {
     const c = scene.clone()
     c.traverse((child) => {
@@ -310,7 +310,7 @@ export function Dresser({ position, rotation, scale }) {
 }
 
 export function Lamp({ position, scale, rotation }) {
-  const { scene } = useGLTF('/models/lamp.glb')
+  const { scene } = useGLTF('./models/lamp.glb')
   const clone = useMemo(() => {
     const c = scene.clone()
     const box = new THREE.Box3().setFromObject(c)
@@ -341,7 +341,7 @@ export function Lamp({ position, scale, rotation }) {
 }
 
 export function OpenBook({ position, scale, rotation }) {
-  const { scene } = useGLTF('/models/openBook.glb')
+  const { scene } = useGLTF('./models/openBook.glb')
   const clone = useMemo(() => {
     const c = scene.clone()
     const box = new THREE.Box3().setFromObject(c)
@@ -363,7 +363,7 @@ export function OpenBook({ position, scale, rotation }) {
 }
 
 export function WallLamp({ position, scale, rotation }) {
-  const { scene } = useGLTF('/models/wallLamp.glb')
+  const { scene } = useGLTF('./models/wallLamp.glb')
   const clone = useMemo(() => {
     const c = scene.clone()
     const box = new THREE.Box3().setFromObject(c)
@@ -394,7 +394,7 @@ export function WallLamp({ position, scale, rotation }) {
 }
 
 export function Pedestal({ position, scale }) {
-  const { scene } = useGLTF('/models/pedestal.glb')
+  const { scene } = useGLTF('./models/pedestal.glb')
   const [colorMap, normalMap, roughnessMap] = useTexture([
     '/textures/baseboard/baseboard_diff_1k.png',
     '/textures/baseboard/baseboard_nor_gl_1k.png',
@@ -427,7 +427,7 @@ export function Pedestal({ position, scale }) {
 }
 
 export function CatStatue({ position, rotation, scale }) {
-  const { scene } = useGLTF('/models/concrete_cat_statue_1k.gltf/concrete_cat_statue_1k.gltf')
+  const { scene } = useGLTF('./models/concrete_cat_statue_1k.gltf/concrete_cat_statue_1k.gltf')
   const clone = useMemo(() => scene.clone(), [scene])
   return (
     <primitive
@@ -440,7 +440,7 @@ export function CatStatue({ position, rotation, scale }) {
 }
 
 export function RopeBarrier({ position, rotation, scale }) {
-  const { scene } = useGLTF('/models/ropeBarrier.glb')
+  const { scene } = useGLTF('./models/ropeBarrier.glb')
 
   const clone = useMemo(() => {
     const c = scene.clone()
@@ -471,7 +471,7 @@ export function RopeBarrier({ position, rotation, scale }) {
 }
 
 export function Linkedin({ position, scale, rotation }) {
-  const { scene } = useGLTF('/models/linkedin.glb')
+  const { scene } = useGLTF('./models/linkedin.glb')
   const clone = useMemo(() => {
     const c = scene.clone()
     const box = new THREE.Box3().setFromObject(c)
@@ -493,7 +493,7 @@ export function Linkedin({ position, scale, rotation }) {
 }
 
 export function Mail({ position, scale, rotation }) {
-  const { scene } = useGLTF('/models/mail.glb')
+  const { scene } = useGLTF('./models/mail.glb')
   const clone = useMemo(() => {
     const c = scene.clone()
     const box = new THREE.Box3().setFromObject(c)
@@ -515,7 +515,7 @@ export function Mail({ position, scale, rotation }) {
 }
 
 export function Piano({ position, rotation, scale }) {
-  const { scene } = useGLTF('/models/piano.glb')
+  const { scene } = useGLTF('./models/piano.glb')
 
   const clone = useMemo(() => {
     const c = scene.clone()
@@ -546,7 +546,7 @@ export function Piano({ position, rotation, scale }) {
 }
 
 export function Bookshelf({ position, rotation, scale }) {
-  const { scene } = useGLTF('/models/bookshelf.glb')
+  const { scene } = useGLTF('./models/bookshelf.glb')
 
   const clone = useMemo(() => {
     const c = scene.clone()
@@ -577,7 +577,7 @@ export function Bookshelf({ position, rotation, scale }) {
 }
 
 export function SleepingCat({ position, rotation, scale }) {
-  const { scene } = useGLTF('/models/sleepingCat.glb')
+  const { scene } = useGLTF('./models/sleepingCat.glb')
 
   const clone = useMemo(() => {
     const c = scene.clone()
@@ -602,7 +602,7 @@ export function SleepingCat({ position, rotation, scale }) {
 }
 
 export function Table({ position, rotation, scale }) {
-  const { scene } = useGLTF('/models/table.glb')
+  const { scene } = useGLTF('./models/table.glb')
 
   const clone = useMemo(() => {
     const c = scene.clone()
@@ -633,7 +633,7 @@ export function Table({ position, rotation, scale }) {
 }
 
 export function Chair({ position, rotation, scale }) {
-  const { scene } = useGLTF('/models/chair.glb')
+  const { scene } = useGLTF('./models/chair.glb')
 
   const clone = useMemo(() => {
     const c = scene.clone()
@@ -664,7 +664,7 @@ export function Chair({ position, rotation, scale }) {
 }
 
 export function Chess({ position, scale, rotation }) {
-  const { scene } = useGLTF('/models/chess.glb')
+  const { scene } = useGLTF('./models/chess.glb')
   const clone = useMemo(() => {
     const c = scene.clone()
     const box = new THREE.Box3().setFromObject(c)
@@ -687,7 +687,7 @@ export function Chess({ position, scale, rotation }) {
 
 RectAreaLightUniformsLib.init()
 export function PaintingLamp({ position, scale, rotation, playerPositionRef }) {
-  const { scene } = useGLTF('/models/paintingLamp.glb')
+  const { scene } = useGLTF('./models/paintingLamp.glb')
   const lightRef = useRef()
   const pos = useMemo(() => new THREE.Vector3(...position), [position])
 
@@ -766,7 +766,7 @@ export function PawPrint({ position, rotation, scale, color }) {
 }
 
 export function LightSwitch({ position, rotation, scale }) {
-  const { scene } = useGLTF('/models/lightSwitch.glb')
+  const { scene } = useGLTF('./models/lightSwitch.glb')
 
   const clone = useMemo(() => {
     const c = scene.clone()
@@ -791,7 +791,7 @@ export function LightSwitch({ position, rotation, scale }) {
 }
 
 export function Plant1({ position, scale, rotation }) {
-  const { scene } = useGLTF('/models/plant1.glb')
+  const { scene } = useGLTF('./models/plant1.glb')
   const clone = useMemo(() => {
     const c = scene.clone()
     const box = new THREE.Box3().setFromObject(c)
@@ -813,7 +813,7 @@ export function Plant1({ position, scale, rotation }) {
 }
 
 export function Desk({ position, rotation, scale }) {
-  const { scene } = useGLTF('/models/desk.glb')
+  const { scene } = useGLTF('./models/desk.glb')
 
   const clone = useMemo(() => {
     const c = scene.clone()
@@ -844,7 +844,7 @@ export function Desk({ position, rotation, scale }) {
 }
 
 export function ChalkBoard({ position, rotation, scale }) {
-  const { scene } = useGLTF('/models/chalkboard.glb')
+  const { scene } = useGLTF('./models/chalkboard.glb')
 
   const clone = useMemo(() => {
     const c = scene.clone()
@@ -875,7 +875,7 @@ export function ChalkBoard({ position, rotation, scale }) {
 }
 
 export function Easel({ position, rotation, scale }) {
-  const { scene } = useGLTF('/models/easel.glb')
+  const { scene } = useGLTF('./models/easel.glb')
 
   const clone = useMemo(() => {
     const c = scene.clone()
@@ -906,7 +906,7 @@ export function Easel({ position, rotation, scale }) {
 }
 
 export function Canva({ position, scale, rotation }) {
-  const { scene } = useGLTF('/models/canvas.glb')
+  const { scene } = useGLTF('./models/canvas.glb')
   const clone = useMemo(() => {
     const c = scene.clone()
     const box = new THREE.Box3().setFromObject(c)
@@ -935,7 +935,7 @@ export function Canva({ position, scale, rotation }) {
 }
 
 export function UnderShelf({ position, rotation, scale }) {
-  const { scene } = useGLTF('/models/underShelf.glb')
+  const { scene } = useGLTF('./models/underShelf.glb')
   const colliderRef = useRef()
 
   useEffect(() => {

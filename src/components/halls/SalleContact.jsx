@@ -7,7 +7,7 @@ import { useState, useEffect } from "react";
 
 
 export function Carpet({ position, scale, rotation }) {
-    const { scene } = useGLTF('/models/carpetContact.glb')
+    const { scene } = useGLTF('./models/carpetContact.glb')
     const clone = useMemo(() => {
         const c = scene.clone()
         const box = new THREE.Box3().setFromObject(c)
