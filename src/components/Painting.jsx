@@ -15,7 +15,7 @@ export function Painting({ position, rotation, image, onNear, onLeave, scale, pl
   const [isNear, setIsNear] = useState(false)
 
   // Frame
-  const { scene } = useGLTF('/models/frame/frame.gltf')
+  const { scene } = useGLTF(import.meta.env.BASE_URL + 'models/frame/frame.gltf')
   const frameClone = useMemo(() => scene.clone(), [scene])
 
   // Vecteurs hors du useFrame pour éviter les fuites mémoire
@@ -40,4 +40,4 @@ export function Painting({ position, rotation, image, onNear, onLeave, scale, pl
   )
 }
 
-useGLTF.preload('/models/frame/frame.gltf')
+useGLTF.preload(import.meta.env.BASE_URL + 'models/frame/frame.gltf')

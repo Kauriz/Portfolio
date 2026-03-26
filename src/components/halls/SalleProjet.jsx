@@ -4,7 +4,7 @@ import { useGLTF } from "@react-three/drei";
 import { projects } from "../../data/projects";
 import { ImagePlane } from "../halls/SalleProfil" 
 
-useGLTF.preload('/models/pillar.glb')
+useGLTF.preload(import.meta.env.BASE_URL + 'models/pillar.glb')
 
 export function SalleProjet({ onNear, onLeave, playerPositionRef }) {
     const bluePawprint = "#5591a5"
@@ -114,9 +114,9 @@ export function SalleProjet({ onNear, onLeave, playerPositionRef }) {
             <PawPrint position={[0.8,0.01,-34.8]} rotation={[0,Math.PI/30,0]} scale={[0.4,0.4,0.4]} color={greenPawprint} />
             <UnderShelf position={[-7.5,3.5,-14.4]} scale={[0.003,0.003,0.003]} rotation={[0,Math.PI, 0]} />
             <UnderShelf position={[7.5,2.34,-14.4]} scale={[0.003,0.003,0.003]} rotation={[0,Math.PI, 0]} />
-            <ImagePlane path={"/textures/contactSign.png"} position={[-12,2.5,-18.01]} scale={[1,1,1]} rotation={[0,-Math.PI,0]} /> 
-            <ImagePlane path={"/textures/experienceSign.png"} position={[-1.99,2.5,-37]} scale={[1,1,1]} rotation={[0,Math.PI/2,0]} /> 
-            <ImagePlane path={"/textures/projetSign.png"} position={[-1.99,2.5,-13.5]} scale={[1,1,1]} rotation={[0,Math.PI/2,0]} /> 
+            <ImagePlane path={import.meta.env.BASE_URL + "textures/contactSign.png"} position={[-12,2.5,-18.01]} scale={[1,1,1]} rotation={[0,-Math.PI,0]} /> 
+            <ImagePlane path={import.meta.env.BASE_URL + "textures/experienceSign.png"} position={[-1.99,2.5,-37]} scale={[1,1,1]} rotation={[0,Math.PI/2,0]} /> 
+            <ImagePlane path={import.meta.env.BASE_URL + "textures/projetSign.png"} position={[-1.99,2.5,-13.5]} scale={[1,1,1]} rotation={[0,Math.PI/2,0]} /> 
         </group>
     )
 }
