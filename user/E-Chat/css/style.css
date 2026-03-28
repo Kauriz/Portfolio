@@ -1,0 +1,244 @@
+/* Général */
+
+html,body{
+    margin: 0;
+    padding: 0;
+    width: 100%;
+    height: 100%;
+}
+
+h4{
+    margin: 0;
+    height: 100%;
+    display: flex;
+    align-items: center; 
+    text-decoration: none;
+    font-weight: normal;
+}
+
+.container{
+    width: 100%;
+    height: 100%;
+    display: flex;
+    flex-direction: row; /* sidebar à gauche, main à droite */
+    gap: 20px; /* Espace entre sidebar et main */
+}
+
+.desactiver{
+    display: none;
+}
+
+main{
+    width: 100%;
+}
+
+ul{
+    list-style: none;
+}
+
+img{
+    max-width: 100px;
+    max-height: 100px;
+    min-width: 10px;
+    min-height: 10px;
+    object-fit: contain;
+}
+
+.bouton{
+    list-style-type: none;
+    display: flex;
+    gap: 20px;
+    align-items: center;
+    border: 2px solid #90CAF9;
+    border-radius: 8px;
+    background-color: #2196F3;
+    justify-content: flex-start;
+}
+
+.bouton:hover{
+    background-color: #90CAF9;
+}
+
+.sansFond{
+    background-color: transparent;
+    border-width: 0px;
+}
+
+/* Menu en haut */
+
+nav{
+    background-color: #F5F5F5;
+    border-bottom: 1px solid #2196F3 ;
+    padding: 1vh;
+}
+
+nav ul{
+    margin: 0;
+    padding-left: 2vw;
+    padding-right: 2vw;
+    list-style-type: none;
+    display: flex;
+    gap: 20px;
+    align-items: center;
+}
+
+nav ul li a{
+    text-decoration: none;
+    color: black;
+}
+
+nav ul li a:hover{
+    text-decoration: underline;
+    text-decoration-color: #2196F3;
+    text-decoration-thickness: 2px;
+    text-decoration-skip-ink: none;
+}
+
+.boutonAjout{
+    list-style-type: none;
+    display: flex;
+    gap: 20px;
+    align-items: center;
+    border: 2px solid #90CAF9;
+    border-radius: 25px;
+    background-color: #2196F3;
+    justify-content: flex-start;
+    padding: 15% 50% 15% 50%;
+    font-size: 20px;
+    color: white;
+    
+}
+
+.liBoutonAjout{
+    padding: 0% 4% 0% 0%;
+    margin-left: auto;
+}
+
+/* Sidebar */
+
+.sidebar{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 14%;
+    height: 100%;
+    background-color: #FAF9F6;
+    flex-shrink: 0;
+}
+
+.sidebar ul{
+    margin: 0;
+    padding: 0;
+    width: 90%;
+    list-style-type: none;
+}
+
+.sidebar ul li{
+    display: flex;
+    align-content: center;
+    gap: 5px;
+    height: 5vh;
+}
+
+.sidebar ul li .ajout{
+    height: 100%;
+    width: 100%;
+    padding-left: 8%;
+    list-style-type: none;
+    display: flex;
+    gap: 20px;
+    align-items: center;
+    border: 2px solid #90CAF9;
+    border-radius: 8px;
+    background-color: #2196F3;
+    justify-content: flex-start;
+}
+
+.sidebar ul li .ajout:hover{
+    background-color: #90CAF9;
+}
+
+.sidebar ul .tag{
+    padding-left: 8%;
+    border: 2px solid #2196F3;
+    border-radius: 8px;
+    background-color: #90CAF9;
+    position: relative;
+}
+
+.sidebar ul .tag:hover .desactiver{
+    display: inline-block;
+    background-color: transparent;
+    border-width: 0px;
+    position: absolute;
+    top: 0;
+    right: 0;
+}
+
+.sidebar h3{
+    align-self: flex-start;
+    margin-left: 1vw;
+}
+
+.imgTag{
+    padding: 10px;
+    padding-left: 1px;
+}
+
+.imgSuppr{
+    width: 15px;
+    opacity: 0.5;
+}
+
+/* Popup */
+
+.popup{
+    display: none;
+    position: fixed;
+    top: 0; left: 0;
+    width: 100%; height: 100%;
+}
+
+.centrer {
+    background: #FAF9F6;
+    margin: 10% auto;
+    width: 20%;
+    height: 30%;
+    border-radius: 8px;
+    text-align: left;
+    border: 2px solid #2196F3;
+}
+
+/* Liste de taches */
+
+li.tache{
+    display: flex;
+    gap: 20px;
+    border-top: 1px solid #E0E0E0;
+    width: 90%;
+    min-height: 50px;
+    padding-bottom: 10px;
+    padding-top: 10px;
+    align-items: center;
+}
+
+.imgEtat{
+    max-width: 100px;
+    max-height: 100px;
+    width: 25px;
+    height: 25px;
+    margin-left: auto;
+}
+
+li.tag{
+    display: flex;
+    align-items: center;
+}
+
+.tagTache{
+    border-radius: 15px;
+    background-color: #E0E0E0;
+    border: 1px solid #B0B0B0;
+    padding-left: 1vh;
+    padding-right: 1vh;
+}
